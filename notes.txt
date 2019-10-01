@@ -1,0 +1,27 @@
+Python selenium webdriver files download link for different browsers.
+https://pypi.org/project/selenium/
+
+Firefox geckodriver download link:
+https://github.com/mozilla/geckodriver/releases
+
+Chrome webdriver download link:
+https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+Adding files to .gitignore:
+echo "geckodriver.log" >> .gitignore
+
+Putting geckodriver in PATH:
+cd ~/.local/bin
+cp ~/Desktop/data-science/telegraph_scraper/webdriver_installations/geckodriver-v0.25.0-linux64/geckodriver .
+cp ~/Desktop/data-science/telegraph_scraper/webdriver_installations/chromedriver_linux64/chromedriver .
+echo 'PATH=~/.local/bin:$PATH' >> ~/.bashrc
+
+Make a folder as module so that files can be imported:
+add a file __init__.py. This will make the folder "importable". Now objects, modules can be imported from it.
+Also, need to set the PYTHONPATH variable.
+
+Setting PYTHONPATH:
+export PYTHONPATH=`pwd`
+
+github url to clone repo:
+https://github.com/agnivothers/telegraph_scraper.git
