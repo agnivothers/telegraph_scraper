@@ -1,8 +1,7 @@
 from selenium import webdriver
-from code import login_credentials
 
 
-class TimesScraper:
+class TelegraphScraper:
 
     def greeting(self,name):
         print("Hello! ",name)
@@ -12,11 +11,6 @@ class TimesScraper:
         browser.set_window_size(1024, 600)
         browser.maximize_window()
         return(browser)
-    def get_times_archive_home_page(self,browser):
-        browser.get("https://epaper.timesgroup.com/TOI/TimesOfIndia/indialogin.aspx")
-        #print(login_credentials.username,login_credentials.password)
+    def get_telegraph_archive_home_page(self,browser):
+        browser.get("https://epaper.telegraphgroup.com/TOI/TelegraphOfIndia/indialogin.aspx")
         return(browser)
-    """
-    def get_login_credentials(self):
-        return(login_credentials.username,login_credentials.password)
-    """

@@ -1,10 +1,10 @@
-from code import times_scraper
+from code import telegraph_scraper
 
 def main():
     print("Wrapper program started ...")
-    ts = times_scraper.TimesScraper()
+    ts = telegraph_scraper.TelegraphScraper()
     a = ts.get_browser()
-    a = ts.get_times_archive_home_page(a)
+    a = ts.get_telegraph_archive_home_page(a)
     print("Wrapper program completed.")
 if __name__=="__main__":
   main()
