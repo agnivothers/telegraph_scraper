@@ -1,4 +1,6 @@
 from selenium import webdriver
+from bs4 import BeautifulSoup
+from urllib import request
 
 
 class TelegraphScraper:
@@ -22,3 +24,11 @@ class TelegraphScraper:
         year_first_date_string = year + "-" + month + "-" + day
         browser.get("https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(page_no)+"&type=a")
         return(browser)
+    def get_maps_for_date_and_page_no(self,year,month,day,page_no):
+        year_first_date_string = year + "-" + month + "-" + day
+        url = "https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(page_no)+"&type=a"
+        html = request.urlopen(url)
+        soup = BeautifulSoup(html,"lxml")
+        #maps = soup.find("map",name="enewspaper1")
+        maps = soup.find(attrs={'name':'Maps'})
+        return maps
