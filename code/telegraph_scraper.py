@@ -12,5 +12,8 @@ class TelegraphScraper:
         browser.maximize_window()
         return(browser)
     def get_telegraph_archive_home_page(self,browser):
-        browser.get("https://epaper.telegraphgroup.com/TOI/TelegraphOfIndia/indialogin.aspx")
+        browser.get("https://epaper.telegraphindia.com/archives.php")
+        return(browser)
+    def access_archive_of_date(self,browser,date_string):
+        browser.get("https://epaper.telegraphindia.com/index.php?pagedate="+date_string+"&edcode=71&subcode=71&mod=&pgnum=1&type=a")
         return(browser)

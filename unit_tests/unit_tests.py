@@ -15,33 +15,9 @@ class TelegraphHomePageTest(unittest.TestCase):
         browser = self.ts.get_browser()
         browser = self.ts.get_telegraph_archive_home_page(browser)
         self.assertIn('', browser.title)
-    def test_navigate_to_login_page(self):
+    def test_access_a_particular_date(self):
         browser = self.ts.get_browser()
-        browser = self.ts.get_telegraph_archive_home_page(browser)
-        #a = browser.find_element_by_partial_link_text("Log")
-        a = browser.find_elements_by_class_name("btn.btn-primary")
-
-        for element in a:
-            element.click()
-
-        #a = browser.find_elements_by_class_name("col-md-12")
-        #a = browser.find_element_by_link_text("Log in here")
-        #a = browser.find_elements_by_xpath("//div")
-        print(a)
-        print(browser.window_handles)
-        WebDriverWait(browser, 10).until(lambda d: len(d.window_handles) == 2)
-        for handle in browser.window_handles:
-            print("Printing handles")
-            print(handle)
-            browser.switch_to.window(handle)
-            print(browser.title)
-            WebDriverWait(browser, 10).until(lambda d: d.title != "")
-            self.assertIn('Log In', browser.title)
-            """
-            b = browser.switch_to.window(handle)
-            print('Switched window')
-            print(b)
-            """
-
-if __name__ == '__main__': 
+        browser = self.ts.access_archive_of_date(browser,"2019-10-01")
+        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 1',browser.title,msg="The Title did not match")
+if __name__ == '__main__':
     unittest.main() 
