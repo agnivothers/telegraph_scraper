@@ -19,5 +19,10 @@ class TelegraphHomePageTest(unittest.TestCase):
         browser = self.ts.get_browser()
         browser = self.ts.access_archive_of_date(browser,"2019-10-01")
         self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 1',browser.title,msg="The Title did not match")
+    def test_access_a_particular_date_and_page_no(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.access_archive_of_date_and_page_no(browser,"2019-10-01",10)
+        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 10',browser.title,msg="The Title did not match")
+
 if __name__ == '__main__':
     unittest.main() 
