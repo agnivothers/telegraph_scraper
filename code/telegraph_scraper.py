@@ -33,7 +33,11 @@ class TelegraphScraper:
         maps = soup.find(attrs={'name':'Maps'})
         return maps
     def get_map_collection(self,maps):
-        map_collection = maps.find_all_next("area")
+        map_collection_all = maps.find_all_next("area")
+        map_collection = []
+        for tag in map_collection_all:
+            if "show_pophead" in str(tag):
+                map_collection.append(tag)
         return map_collection
     def get_link_from_tag(self,tag,year,month,day,page_no):
         onclick_signature_for_textview = tag.attrs['onclick']

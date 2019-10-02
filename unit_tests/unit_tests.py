@@ -42,7 +42,7 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_link_from_tag(self):
         maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
         map_collection1 = self.ts.get_map_collection(maps)
-        link1 = self.ts.get_link_from_tag(map_collection1[1],"2019", "10", "01", 1)
+        link1 = self.ts.get_link_from_tag(map_collection1[0],"2019", "10", "01", 1)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1, link2)
 
