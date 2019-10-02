@@ -42,9 +42,14 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_link_from_tag(self):
         maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
         map_collection1 = self.ts.get_map_collection(maps)
-        link1 = self.ts.get_link_from_tag(map_collection1[0])
+        link1 = self.ts.get_link_from_tag(map_collection1[1],"2019", "10", "01", 1)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1, link2)
+
+    def get_map_collection_for_2019_10_01(self):
+        return []
+    def get_first_link_from_tag_for_2019_10_01(self):
+        return 'https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html'
 
     def get_maps_for_2019_10_01(self):
         maps = ""
@@ -75,9 +80,6 @@ class TelegraphHomePageTest(unittest.TestCase):
         """
         return maps
 
-    def get_map_collection_for_2019_10_01(self):
-        return []
-    def get_first_link_from_tag_for_2019_10_01(self):
-        return ''
+
 if __name__ == '__main__':
     unittest.main() 

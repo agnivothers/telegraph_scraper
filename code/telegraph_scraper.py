@@ -35,5 +35,14 @@ class TelegraphScraper:
     def get_map_collection(self,maps):
         map_collection = maps.find_all_next("area")
         return map_collection
-    def get_link_from_tag(self,tag):
-        return ''
+    def get_link_from_tag(self,tag,year,month,day,page_no):
+        onclick_signature_for_textview = tag.attrs['onclick']
+        parameters = onclick_signature_for_textview.replace('return show_pophead(','').replace(')','').replace('\'','')
+        print(parameters)
+        parameters_list = parameters.split(',')
+        print(parameters_list)
+        #link = https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html
+        link =  "https://epaper.telegraphindia.com/textview_{0}_{1}_{2}_1_{3}_{4}-{5}-{6}_71_1.html"\
+            .format(parameters_list[0],parameters_list[1],parameters_list[2],page_no,day,month,year)
+        print(link)
+        return link
