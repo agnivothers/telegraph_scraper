@@ -27,13 +27,26 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_maps(self):
         #browser = self.ts.get_browser()
         #browser = self.ts.access_archive_of_date_and_page_no(browser, "2019", "10", "01", 1)
-        map1 = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
-        print((type(map1)))
-        map2 = self.get_map_for_2019_10_01()
+        maps1 = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        #print((type(map1)))
+        maps2 = self.get_maps_for_2019_10_01()
 
-        self.assertEqual(map1,map2)
+        self.assertEqual(maps1,maps2)
 
-    def get_map_for_2019_10_01(self):
+    def test_get_map(self):
+        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        map_collection1 = self.ts.get_map_collection(maps)
+        map_collection2 = self.get_map_collection_for_2019_10_01()
+        self.assertEqual(map_collection1, map_collection2)
+
+    def test_get_link_from_tag(self):
+        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        map_collection1 = self.ts.get_map_collection(maps)
+        link1 = self.ts.get_link_from_tag(map_collection1[0])
+        link2 = self.get_first_link_from_tag_for_2019_10_01()
+        self.assertEqual(link1, link2)
+
+    def get_maps_for_2019_10_01(self):
         maps = ""
         """
         <map name="Maps"><area shape="rect" class="borderimage" coords="373,589,729,1144" href="#" onclick="return show_pop('295380','16016245','4')" onmouseover="borderit(this,'black','')" onmouseout="borderit(this,'white')" data-tooltip=""> 
@@ -62,5 +75,9 @@ class TelegraphHomePageTest(unittest.TestCase):
         """
         return maps
 
+    def get_map_collection_for_2019_10_01(self):
+        return []
+    def get_first_link_from_tag_for_2019_10_01(self):
+        return ''
 if __name__ == '__main__':
     unittest.main() 

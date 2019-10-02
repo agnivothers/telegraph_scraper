@@ -32,3 +32,8 @@ class TelegraphScraper:
         #maps = soup.find("map",name="enewspaper1")
         maps = soup.find(attrs={'name':'Maps'})
         return maps
+    def get_map_collection(self,maps):
+        map_collection = maps.find_all_next("area")
+        return map_collection
+    def get_link_from_tag(self,tag):
+        return ''
