@@ -61,4 +61,10 @@ class TelegraphScraper:
     def get_news_text(self,link):
         news_text = ''
         soup = self.get_bsobject_from_link(link)
+        story_details = soup.find(class_="stry_dtl_lft")
+        text_tag_collection = story_details.find_all(class_="p_txt_kj")
+        for tag in text_tag_collection:
+            print(tag.string)
+            #text = tag.
+
         return news_text
