@@ -31,20 +31,26 @@ class TelegraphHomePageTest(unittest.TestCase):
         #print((type(map1)))
         maps2 = self.get_maps_for_2019_10_01()
 
-        self.assertEqual(maps1,maps2)
+        self.assertEqual(maps1,maps2,"The maps did not match.")
 
     def test_get_map(self):
         maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
         map_collection1 = self.ts.get_map_collection(maps)
         map_collection2 = self.get_map_collection_for_2019_10_01()
-        self.assertEqual(map_collection1, map_collection2)
+        self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
 
     def test_get_link_from_tag(self):
         maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
         map_collection1 = self.ts.get_map_collection(maps)
         link1 = self.ts.get_link_from_tag(map_collection1[0],"2019", "10", "01", 1)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
-        self.assertEqual(link1, link2)
+        self.assertEqual(link1, link2,"The links did not match.")
+
+    def test_access_link(self):
+        link = self.get_first_link_from_tag_for_2019_10_01()
+        title1 = self.ts.get_title_from_html(link)
+        title2 = 'Riot relief delay rap on Gujarat '
+        self.assertEqual(title1, title2,"The titles did not match.")
 
     def get_map_collection_for_2019_10_01(self):
         return []
