@@ -58,3 +58,7 @@ class TelegraphScraper:
         soup = self.get_bsobject_from_link(link)
         title = soup.find("title")
         return title.string
+    def get_news_text(self,link):
+        news_text = ''
+        soup = self.get_bsobject_from_link(link)
+        return news_text
