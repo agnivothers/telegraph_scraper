@@ -81,7 +81,9 @@ class TelegraphScraper:
         news_text = ''
         #print("THE LINK IS: "+link)
         soup = self.get_bsobject_from_parameters(ap)
-        story_details = soup.find(class_="stry_dtl_lft")
+        #story_details = soup.find(class_="stry_dtl_lft")
+        id = ap.pophead_variable2+":~~:"
+        story_details = soup.find(id=id)
         text_tag_collection = story_details.find_all(class_="p_txt_kj")
         #print(str(text_tag_collection[0]))
         first_tag = BeautifulSoup(str(text_tag_collection[0]),"lxml")

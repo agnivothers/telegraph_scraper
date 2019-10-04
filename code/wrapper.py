@@ -19,11 +19,11 @@ def main():
         link = ts.get_link_from_parameters(ap)
         print(link)
         """
-        
-        title = ts.get_title_from_html(link)
+        print("-------------------------------------------------------------")
+        title = ts.get_title(ap)
         print(title)
         print("-------------------------------------------------------------")
-        text = ts.get_news_text(link)
+        text = ts.get_news_text(ap)
         print(text)
         """
     print("Wrapper program completed.")
