@@ -12,10 +12,11 @@ def main():
     a = ts.get_browser()
     a = ts.get_telegraph_archive_home_page(a)
     """
-    maps = ts.get_maps_for_date_and_page_no("2019","10","01",1)
+    maps = ts.get_maps_for_date_and_page_no(ap)
     map_collection = ts.get_map_collection(maps)
     for tag in map_collection:
-        link = ts.get_link_from_tag(tag, "2019", "10", "01", 1)
+        ap = ts.get_variable_parameters_from_tag(tag,ap)
+        link = ts.get_link_from_parameters(ap)
         print(link)
         """
         
