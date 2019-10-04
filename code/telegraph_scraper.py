@@ -2,9 +2,17 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from urllib import request
 
+class ArchiveParameters:
+    year    = ""
+    month   = ""
+    day     = ""
+    page_no = 1
+    parameter1 = ""
+    parameter2 = ""
+    parameter3 = ""
 
 class TelegraphScraper:
-
+    """
     def greeting(self,name):
         print("Hello! ",name)
 
@@ -24,9 +32,10 @@ class TelegraphScraper:
         year_first_date_string = year + "-" + month + "-" + day
         browser.get("https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(page_no)+"&type=a")
         return(browser)
-    def get_maps_for_date_and_page_no(self,year,month,day,page_no):
-        year_first_date_string = year + "-" + month + "-" + day
-        url = "https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(page_no)+"&type=a"
+    """
+    def get_maps_for_date_and_page_no(self,ap):
+        year_first_date_string = ap.year + "-" + ap.month + "-" + ap.day
+        url = "https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(ap.page_no)+"&type=a"
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         #maps = soup.find("map",name="enewspaper1")
@@ -39,7 +48,7 @@ class TelegraphScraper:
             if "show_pophead" in str(tag):
                 map_collection.append(tag)
         return map_collection
-    def get_link_from_tag(self,tag,year,month,day,page_no):
+    def get_link_from_tag(self,tag,ap):
         onclick_signature_for_textview = tag.attrs['onclick']
         parameters = onclick_signature_for_textview.replace('return show_pophead(','').replace(')','').replace('\'','')
         #print(parameters)
@@ -47,7 +56,7 @@ class TelegraphScraper:
         #print(parameters_list)
         #link = https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html
         link =  "https://epaper.telegraphindia.com/textview_{0}_{1}_{2}_1_{3}_{4}-{5}-{6}_71_1.html"\
-            .format(parameters_list[0],parameters_list[1],parameters_list[2],page_no,day,month,year)
+            .format(parameters_list[0],parameters_list[1],parameters_list[2],ap.page_no,ap.day,ap.month,ap.year)
         #print(link)
         return link
     def get_bsobject_from_link(self,link):
@@ -59,8 +68,9 @@ class TelegraphScraper:
         title = soup.find("title")
         return title.string
     def get_news_text(self,link):
-        self.maxDiff = None
+        #self.maxDiff = None
         news_text = ''
+        #print("THE LINK IS: "+link)
         soup = self.get_bsobject_from_link(link)
         story_details = soup.find(class_="stry_dtl_lft")
         text_tag_collection = story_details.find_all(class_="p_txt_kj")

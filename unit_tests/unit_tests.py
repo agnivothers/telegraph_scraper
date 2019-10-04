@@ -10,6 +10,12 @@ class TelegraphHomePageTest(unittest.TestCase):
     def setUp(self):
         ts = telegraph_scraper.TelegraphScraper()
         self.ts = ts # Learning Python Testing, Pg. 88 How to use objects created in setUP method by other methods
+        ap = telegraph_scraper.ArchiveParameters()
+        ap.year = "2019"
+        ap.month = "10"
+        ap.day = "01"
+        ap.page_no = 1
+        self.ap = ap
     """
     def test_telegraph_archive_page_url_load(self):
         browser = self.ts.get_browser()
@@ -40,9 +46,9 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
     """
     def test_get_link_from_tag(self):
-        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
         map_collection1 = self.ts.get_map_collection(maps)
-        link1 = self.ts.get_link_from_tag(map_collection1[0],"2019", "10", "01", 1)
+        link1 = self.ts.get_link_from_tag(map_collection1[0],self.ap)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1, link2,"The links did not match.")
 
@@ -53,6 +59,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(title1, title2,"The titles did not match.")
 
     def test_access_news_text(self):
+        self.maxDiff = None
         link = self.get_first_link_from_tag_for_2019_10_01()
         text1 = self.ts.get_news_text(link)
         text2 = self.get_news_text_for_2019_10_01()
