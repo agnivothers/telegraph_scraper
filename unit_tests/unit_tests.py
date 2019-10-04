@@ -44,24 +44,41 @@ class TelegraphHomePageTest(unittest.TestCase):
         map_collection1 = self.ts.get_map_collection(maps)
         map_collection2 = self.get_map_collection_for_2019_10_01()
         self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
-    """
+    
     def test_get_link_from_tag(self):
         maps = self.ts.get_maps_for_date_and_page_no(self.ap)
         map_collection1 = self.ts.get_map_collection(maps)
         link1 = self.ts.get_link_from_tag(map_collection1[0],self.ap)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1, link2,"The links did not match.")
+            
+    """
+    def test_get_variable_parameters_from_tag(self):
+        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
+        map_collection1 = self.ts.get_map_collection(maps)
+        self.ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
+        self.assertEqual(self.ap.pophead_variable1,"295380","First pophead variable did not match.")
+        self.assertEqual(self.ap.pophead_variable2, "1603269", "Second pophead variable did not match.")
+        self.assertEqual(self.ap.pophead_variable3, "4", "Third pophead variable did not match.")
 
-    def test_access_link(self):
+    def test_get_link_from_parameters(self):
+        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
+        map_collection1 = self.ts.get_map_collection(maps)
+        ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
+        link1 = self.ts.get_link_from_parameters(self.ap)
+        link2 = self.get_first_link_from_tag_for_2019_10_01()
+        self.assertEqual(link1,link2,"The links did not match.")
+
+    def test_get_title(self):
         link = self.get_first_link_from_tag_for_2019_10_01()
-        title1 = self.ts.get_title_from_html(link)
+        title1 = self.ts.get_title(self.ap)
         title2 = 'Riot relief delay rap on Gujarat '
         self.assertEqual(title1, title2,"The titles did not match.")
 
-    def test_access_news_text(self):
+    def test_get_news_text(self):
         self.maxDiff = None
         link = self.get_first_link_from_tag_for_2019_10_01()
-        text1 = self.ts.get_news_text(link)
+        text1 = self.ts.get_news_text(self.ap)
         text2 = self.get_news_text_for_2019_10_01()
         self.assertEqual(text1,text2,"The news texts did not match.")
     """

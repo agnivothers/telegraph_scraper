@@ -48,30 +48,39 @@ class TelegraphScraper:
             if "show_pophead" in str(tag):
                 map_collection.append(tag)
         return map_collection
-    def get_link_from_tag(self,tag,ap):
+
+    def get_variable_parameters_from_tag(self,tag,ap):
         onclick_signature_for_textview = tag.attrs['onclick']
         parameters = onclick_signature_for_textview.replace('return show_pophead(','').replace(')','').replace('\'','')
         #print(parameters)
         parameters_list = parameters.split(',')
         #print(parameters_list)
-        #link = https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html
+        ap.pophead_variable1 = parameters_list[0]
+        ap.pophead_variable2 = parameters_list[1]
+        ap.pophead_variable3 = parameters_list[2]
+        return ap
+
+    def get_link_from_parameters(self,ap):
+        # link = https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html
         link =  "https://epaper.telegraphindia.com/textview_{0}_{1}_{2}_1_{3}_{4}-{5}-{6}_71_1.html"\
-            .format(parameters_list[0],parameters_list[1],parameters_list[2],ap.page_no,ap.day,ap.month,ap.year)
+            .format("295380",ap.pophead_variable2,ap.pophead_variable3,ap.page_no,ap.day,ap.month,ap.year)
         #print(link)
         return link
-    def get_bsobject_from_link(self,link):
+
+    def get_bsobject_from_parameters(self, ap):
+        link = self.get_link_from_parameters(ap)
         html = request.urlopen(link)
         soup = BeautifulSoup(html, "lxml")
         return soup
-    def get_title_from_html(self,link):
-        soup = self.get_bsobject_from_link(link)
+    def get_title(self, ap):
+        soup = self.get_bsobject_from_parameters(ap)
         title = soup.find("title")
         return title.string
-    def get_news_text(self,link):
+    def get_news_text(self,ap):
         #self.maxDiff = None
         news_text = ''
         #print("THE LINK IS: "+link)
-        soup = self.get_bsobject_from_link(link)
+        soup = self.get_bsobject_from_parameters(ap)
         story_details = soup.find(class_="stry_dtl_lft")
         text_tag_collection = story_details.find_all(class_="p_txt_kj")
         #print(str(text_tag_collection[0]))
