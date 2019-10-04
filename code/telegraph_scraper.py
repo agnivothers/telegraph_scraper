@@ -7,9 +7,9 @@ class ArchiveParameters:
     month   = ""
     day     = ""
     page_no = 1
-    parameter1 = ""
-    parameter2 = ""
-    parameter3 = ""
+    pophead_variable1 = ""
+    pophead_variable2 = ""
+    pophead_variable3 = ""
 
 class TelegraphScraper:
     """
