@@ -59,12 +59,28 @@ class TelegraphScraper:
         title = soup.find("title")
         return title.string
     def get_news_text(self,link):
+        self.maxDiff = None
         news_text = ''
         soup = self.get_bsobject_from_link(link)
         story_details = soup.find(class_="stry_dtl_lft")
         text_tag_collection = story_details.find_all(class_="p_txt_kj")
+        #print(str(text_tag_collection[0]))
+        first_tag = BeautifulSoup(str(text_tag_collection[0]),"lxml")
+        first_tag.span.unwrap()
+        #print("Printing first_tag:"+first_tag.text)
+        news_text=news_text+first_tag.text
         for tag in text_tag_collection:
-            print(tag.string)
+            if tag.string is not None:
+                news_text = news_text + tag.string
+            #print("Printing tags ...")
+            #print(tag.string)
             #text = tag.
-
+        print(news_text)
         return news_text
+    def get_news_text_from_first_tag(self,first_tag):
+        #text = ''
+        first_tag.span.unwrap()
+        text = first_tag.text
+        return text
+        #text = text+first_tag.span.string
+        #new_tag =

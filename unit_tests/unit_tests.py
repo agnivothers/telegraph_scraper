@@ -32,7 +32,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         maps2 = self.get_maps_for_2019_10_01()
 
         self.assertEqual(maps1,maps2,"The maps did not match.")
-
+    
     def test_get_map(self):
         maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
         map_collection1 = self.ts.get_map_collection(maps)
@@ -57,7 +57,15 @@ class TelegraphHomePageTest(unittest.TestCase):
         text1 = self.ts.get_news_text(link)
         text2 = self.get_news_text_for_2019_10_01()
         self.assertEqual(text1,text2,"The news texts did not match.")
-
+    """
+    def test_get_news_text_from_first_tag(self):
+        first_tag = self.get_first_tag_2019_10_01()
+        text1 = self.ts.get_news_text_from_first_tag(first_tag)
+        text2 = ' Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes'
+        self.assertEqual(text1,text2)
+    def get_first_tag_2019_10_01(self):
+        return '<p class="p_txt_kj"><span style="font-weight:bold">Mumbai:</span> Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes".</p>'
+    """
     def get_news_text_for_2019_10_01(self):
         return ''
 
