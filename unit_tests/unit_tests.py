@@ -76,7 +76,7 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
         folder_name1 = self.ts.get_folder_name(ap)
-        folder_name2 = "data/2019-10-01"
+        folder_name2 = "data/2019-10-01/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
     def get_filled_up_ap(self):
