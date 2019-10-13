@@ -70,7 +70,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         ap = self.get_filled_up_ap()
         #link = self.ts.get_link_from_parameters(ap)
         text1 = self.ts.download_and_get_saved_web_page_path(ap)
-        text2 = self.get_web_page_text_for_2019_01_01_page_01()
+        text2 = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         self.assertEqual(text1,text2,"The downloaded texts did not match.")
 
     def test_get_folder_name(self):
@@ -84,13 +84,14 @@ class TelegraphHomePageTest(unittest.TestCase):
         map_collection1 = self.ts.get_map_collection(maps)
         ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
         return ap
-    """
+
     def test_get_title(self):
-        link = self.get_first_link_from_tag_for_2019_10_01()
-        title1 = self.ts.get_title(self.ap)
+        file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
+        title1 = self.ts.get_title(file_name)
         title2 = 'Riot relief delay rap on Gujarat '
         self.assertEqual(title1, title2,"The titles did not match.")
 
+    """
     def test_get_news_text(self):
         self.maxDiff = None
         link = self.get_first_link_from_tag_for_2019_10_01()
@@ -106,7 +107,7 @@ class TelegraphHomePageTest(unittest.TestCase):
     def get_first_tag_2019_10_01(self):
         return '<p class="p_txt_kj"><span style="font-weight:bold">Mumbai:</span> Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes".</p>'
     """
-    def get_web_page_text_for_2019_01_01_page_01(self):
+    def get_saved_web_page_file_name_for_2019_01_01_page_01(self):
         return 'data/downloaded_data/2019-10-01/1'
     def get_news_text_for_2019_10_01(self):
         return ''

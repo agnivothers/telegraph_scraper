@@ -87,11 +87,11 @@ class TelegraphScraper:
 
     def get_bsobject_from_downloaded_file(self, file_name):
         soup = ''
-        with open(file_name, "rU") as downloaded_file:
-            soup = BeautifulSoup(file_name, "lxml")
+        with open(file_name, "r") as downloaded_file:
+            soup = BeautifulSoup(downloaded_file, "lxml")
         return soup
-    def get_title(self, ap):
-        soup = self.get_bsobject_from_downloaded_file(ap)
+    def get_title(self, file_name):
+        soup = self.get_bsobject_from_downloaded_file(file_name)
         title = soup.find("title")
         return title.string
     def get_news_text(self,ap):

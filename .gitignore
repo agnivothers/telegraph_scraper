@@ -4,3 +4,4 @@ code/__pycache__
 code/login_credentials.py
 .cache
 data/
+test_data
