@@ -75,20 +75,29 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(text1,text2,"The downloaded texts did not match.")
 
     def test_get_bsobject_from_downloaded_file(self):
-        file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
-        #print(file_name)
-        all_div_ids = self.ts.get_bsobject_from_downloaded_file(file_name)
+        all_div_ids = self.get_div_ids()
         self.assertEqual(9,len(all_div_ids),"The number of div ids do not match.")
         """
         for id in all_div_ids:
             print(id)
         """
+
+    def test_get_title(self):
+        all_div_ids = self.get_div_ids()
+        title1 = self.ts.get_news_text(all_div_ids[7])
+        title2 = 'Riot relief delay rap on Gujarat '
+        self.assertEqual(title1, title2, "The titles did not match.")
+
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
         folder_name1 = self.ts.get_folder_name(ap)
         folder_name2 = "data/downloaded_data/2019-10-01/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
+    def get_div_ids(self):
+        file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
+        all_div_ids = self.ts.get_div_ids_from_downloaded_file(file_name)
+        return all_div_ids
     def get_filled_up_ap(self):
         maps = self.ts.get_maps_for_date_and_page_no(self.ap)
         map_collection1 = self.ts.get_map_collection(maps)

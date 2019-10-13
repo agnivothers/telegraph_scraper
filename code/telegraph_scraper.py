@@ -86,7 +86,7 @@ class TelegraphScraper:
         wget.download(link, file_name)
         return file_name
 
-    def get_bsobject_from_downloaded_file(self, file_name):
+    def get_div_ids_from_downloaded_file(self, file_name):
         soup = ''
         #print("CODE: "+file_name)
         with open(file_name, "r") as downloaded_file:
@@ -95,19 +95,20 @@ class TelegraphScraper:
         all_div_ids = soup.find_all(id=id_regex)
         return all_div_ids
 
-    def get_title(self, file_name):
-        soup = self.get_bsobject_from_downloaded_file(file_name)
+    def get_title(self, div_id):
+        #print(div_id)
+        print(type(div_id))
+        title = div_id.find(class_="sub_head  haedlinesstory1")
+        print(title)
+        #soup = BeautifulSoup(div_id,"lxml")
+        """
         title = soup.find("title")
         return title.string
-    def get_news_text(self,ap):
+        """
+    def get_news_text(self,div_id):
         #self.maxDiff = None
         news_text = ''
-        #print("THE LINK IS: "+link)
-        soup = self.get_bsobject_from_downloaded_file(ap)
-        #story_details = soup.find(class_="stry_dtl_lft")
-        id = ap.pophead_variable2+":~~:"
-        story_details = soup.find(id=id)
-        text_tag_collection = story_details.find_all(class_="p_txt_kj")
+        text_tag_collection = div_id.find_all(class_="p_txt_kj")
         #print(str(text_tag_collection[0]))
         first_tag = BeautifulSoup(str(text_tag_collection[0]),"lxml")
         first_tag.span.unwrap()
@@ -121,6 +122,7 @@ class TelegraphScraper:
             #text = tag.
         print(news_text)
         return news_text
+
     def get_news_text_from_first_tag(self,first_tag):
         #text = ''
         first_tag.span.unwrap()
