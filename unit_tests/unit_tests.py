@@ -78,9 +78,11 @@ class TelegraphHomePageTest(unittest.TestCase):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         #print(file_name)
         all_div_ids = self.ts.get_bsobject_from_downloaded_file(file_name)
+        self.assertEqual(9,len(all_div_ids),"The number of div ids do not match.")
+        """
         for id in all_div_ids:
             print(id)
-
+        """
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
         folder_name1 = self.ts.get_folder_name(ap)
