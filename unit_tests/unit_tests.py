@@ -72,10 +72,13 @@ class TelegraphHomePageTest(unittest.TestCase):
         text1 = self.ts.download_and_get_web_page(ap)
         text2 = self.get_web_page_text_for_2019_01_01_page_01()
         self.assertEqual(text1,text2,"The downloaded texts did not match.")
-    """
+
     def test_get_folder_name(self):
-        folder_name1 = self.ts.get_folder_name()
-    """
+        ap = self.get_filled_up_ap()
+        folder_name1 = self.ts.get_folder_name(ap)
+        folder_name2 = "2019-10-01"
+        self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
+
     def get_filled_up_ap(self):
         maps = self.ts.get_maps_for_date_and_page_no(self.ap)
         map_collection1 = self.ts.get_map_collection(maps)
