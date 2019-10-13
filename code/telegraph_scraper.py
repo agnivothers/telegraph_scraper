@@ -67,6 +67,9 @@ class TelegraphScraper:
         #print(link)
         return link
 
+    def download_and_get_web_page(self,link):
+        return ''
+
     def get_bsobject_from_parameters(self, ap):
         link = self.get_link_from_parameters(ap)
         html = request.urlopen(link)
