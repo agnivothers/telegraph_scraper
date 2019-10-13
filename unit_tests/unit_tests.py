@@ -69,7 +69,7 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_download_and_get_web_page(self):
         ap = self.get_filled_up_ap()
         #link = self.ts.get_link_from_parameters(ap)
-        text1 = self.ts.download_and_get_web_page(ap)
+        text1 = self.ts.download_and_get_saved_web_page_path(ap)
         text2 = self.get_web_page_text_for_2019_01_01_page_01()
         self.assertEqual(text1,text2,"The downloaded texts did not match.")
 
@@ -107,7 +107,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         return '<p class="p_txt_kj"><span style="font-weight:bold">Mumbai:</span> Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes".</p>'
     """
     def get_web_page_text_for_2019_01_01_page_01(self):
-        return ''
+        return 'data/downloaded_data/2019-10-01/1'
     def get_news_text_for_2019_10_01(self):
         return ''
 

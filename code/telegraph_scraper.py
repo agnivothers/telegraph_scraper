@@ -73,7 +73,7 @@ class TelegraphScraper:
 
     def get_folder_name(self,ap):
         return self.DOWNLOADED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"
-    def download_and_get_web_page(self,ap):
+    def download_and_get_saved_web_page_path(self, ap):
         folder_name = self.get_folder_name(ap)
         link = self.get_link_from_parameters(ap)
         #print(link)
@@ -83,7 +83,7 @@ class TelegraphScraper:
         if os.path.exists(file_name):
             os.remove(file_name)
         wget.download(link, file_name)
-        return ''
+        return file_name
 
     def get_bsobject_from_parameters(self, ap):
         link = self.get_link_from_parameters(ap)
