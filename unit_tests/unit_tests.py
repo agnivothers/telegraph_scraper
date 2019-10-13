@@ -62,20 +62,25 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(self.ap.pophead_variable3, "4", "Third pophead variable did not match.")
 
     def test_get_link_from_parameters(self):
-        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
-        map_collection1 = self.ts.get_map_collection(maps)
-        ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
-        link1 = self.ts.get_link_from_parameters(self.ap)
+        ap = self.get_filled_up_ap()
+        link1 = self.ts.get_link_from_parameters(ap)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1,link2,"The links did not match.")
     def test_download_and_get_web_page(self):
-        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
-        map_collection1 = self.ts.get_map_collection(maps)
-        ap = self.ts.get_variable_parameters_from_tag(map_collection1[0], self.ap)
-        link = self.ts.get_link_from_parameters(ap)
-        text1 = self.ts.download_and_get_web_page(link)
+        ap = self.get_filled_up_ap()
+        #link = self.ts.get_link_from_parameters(ap)
+        text1 = self.ts.download_and_get_web_page(ap)
         text2 = self.get_web_page_text_for_2019_01_01_page_01()
         self.assertEqual(text1,text2,"The downloaded texts did not match.")
+    """
+    def test_get_folder_name(self):
+        folder_name1 = self.ts.get_folder_name()
+    """
+    def get_filled_up_ap(self):
+        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
+        map_collection1 = self.ts.get_map_collection(maps)
+        ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
+        return ap
     """
     def test_get_title(self):
         link = self.get_first_link_from_tag_for_2019_10_01()

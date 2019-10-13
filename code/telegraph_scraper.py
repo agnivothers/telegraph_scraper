@@ -1,6 +1,8 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from urllib import request
+import os
+import wget
 
 class ArchiveParameters:
     year    = ""
@@ -67,7 +69,10 @@ class TelegraphScraper:
         #print(link)
         return link
 
-    def download_and_get_web_page(self,link):
+
+    def download_and_get_web_page(self,ap):
+        link = self.get_link_from_parameters(ap)
+
         return ''
 
     def get_bsobject_from_parameters(self, ap):
