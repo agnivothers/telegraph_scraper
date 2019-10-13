@@ -77,7 +77,9 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_bsobject_from_downloaded_file(self):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         #print(file_name)
-        self.ts.get_bsobject_from_downloaded_file(file_name)
+        all_div_ids = self.ts.get_bsobject_from_downloaded_file(file_name)
+        for id in all_div_ids:
+            print(id)
 
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
@@ -90,14 +92,14 @@ class TelegraphHomePageTest(unittest.TestCase):
         map_collection1 = self.ts.get_map_collection(maps)
         ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
         return ap
-
+    """
     def test_get_title(self):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         title1 = self.ts.get_title(file_name)
         title2 = 'Riot relief delay rap on Gujarat '
         self.assertEqual(title1, title2,"The titles did not match.")
 
-    """
+
     def test_get_news_text(self):
         self.maxDiff = None
         link = self.get_first_link_from_tag_for_2019_10_01()

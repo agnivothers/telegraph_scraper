@@ -92,13 +92,8 @@ class TelegraphScraper:
         with open(file_name, "r") as downloaded_file:
             soup = BeautifulSoup(downloaded_file, "lxml")
         id_regex = re.compile("id-\d+")
-
         all_div_ids = soup.find_all(id=id_regex)
-
-        for id in all_div_ids:
-            print(id)
-        
-        return soup
+        return all_div_ids
 
     def get_title(self, file_name):
         soup = self.get_bsobject_from_downloaded_file(file_name)
