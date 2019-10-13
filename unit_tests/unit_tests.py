@@ -69,6 +69,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1,link2,"The links did not match.")
 
+    """
     def test_get_title(self):
         link = self.get_first_link_from_tag_for_2019_10_01()
         title1 = self.ts.get_title(self.ap)
@@ -81,7 +82,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         text1 = self.ts.get_news_text(self.ap)
         text2 = self.get_news_text_for_2019_10_01()
         self.assertEqual(text1,text2,"The news texts did not match.")
-    """
+    
     def test_get_news_text_from_first_tag(self):
         first_tag = self.get_first_tag_2019_10_01()
         text1 = self.ts.get_news_text_from_first_tag(first_tag)
