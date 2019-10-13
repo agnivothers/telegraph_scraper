@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from urllib import request
 import os
 import wget
+import re
 
 class ArchiveParameters:
     year    = ""
@@ -87,9 +88,18 @@ class TelegraphScraper:
 
     def get_bsobject_from_downloaded_file(self, file_name):
         soup = ''
+        #print("CODE: "+file_name)
         with open(file_name, "r") as downloaded_file:
             soup = BeautifulSoup(downloaded_file, "lxml")
+        id_regex = re.compile("id-\d+")
+
+        all_div_ids = soup.find_all(id=id_regex)
+
+        for id in all_div_ids:
+            print(id)
+        
         return soup
+
     def get_title(self, file_name):
         soup = self.get_bsobject_from_downloaded_file(file_name)
         title = soup.find("title")

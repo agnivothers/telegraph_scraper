@@ -66,12 +66,18 @@ class TelegraphHomePageTest(unittest.TestCase):
         link1 = self.ts.get_link_from_parameters(ap)
         link2 = self.get_first_link_from_tag_for_2019_10_01()
         self.assertEqual(link1,link2,"The links did not match.")
-    def test_download_and_get_web_page(self):
+
+    def test_download_and_get_saved_web_page_path(self):
         ap = self.get_filled_up_ap()
         #link = self.ts.get_link_from_parameters(ap)
         text1 = self.ts.download_and_get_saved_web_page_path(ap)
         text2 = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         self.assertEqual(text1,text2,"The downloaded texts did not match.")
+
+    def test_get_bsobject_from_downloaded_file(self):
+        file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
+        #print(file_name)
+        self.ts.get_bsobject_from_downloaded_file(file_name)
 
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
