@@ -70,9 +70,11 @@ class TelegraphScraper:
         return link
 
     def get_folder_name(self,ap):
-        return ap.year+"-"+ap.month+"-"+ap.day
+        return "data/"+ap.year+"-"+ap.month+"-"+ap.day
     def download_and_get_web_page(self,ap):
+        folder_name = self.get_folder_name(ap)
         link = self.get_link_from_parameters(ap)
+
 
         return ''
 
