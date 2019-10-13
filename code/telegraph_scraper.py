@@ -85,20 +85,20 @@ class TelegraphScraper:
         wget.download(link, file_name)
         return file_name
 
-    def get_bsobject_from_parameters(self, ap):
-        link = self.get_link_from_parameters(ap)
-        html = request.urlopen(link)
-        soup = BeautifulSoup(html, "lxml")
+    def get_bsobject_from_downloaded_file(self, file_name):
+        soup = ''
+        with open(file_name, "rU") as downloaded_file:
+            soup = BeautifulSoup(file_name, "lxml")
         return soup
     def get_title(self, ap):
-        soup = self.get_bsobject_from_parameters(ap)
+        soup = self.get_bsobject_from_downloaded_file(ap)
         title = soup.find("title")
         return title.string
     def get_news_text(self,ap):
         #self.maxDiff = None
         news_text = ''
         #print("THE LINK IS: "+link)
-        soup = self.get_bsobject_from_parameters(ap)
+        soup = self.get_bsobject_from_downloaded_file(ap)
         #story_details = soup.find(class_="stry_dtl_lft")
         id = ap.pophead_variable2+":~~:"
         story_details = soup.find(id=id)
