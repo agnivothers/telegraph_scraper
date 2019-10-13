@@ -14,6 +14,8 @@ class ArchiveParameters:
     pophead_variable3 = ""
 
 class TelegraphScraper:
+    DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
+
     """
     def greeting(self,name):
         print("Hello! ",name)
@@ -70,7 +72,7 @@ class TelegraphScraper:
         return link
 
     def get_folder_name(self,ap):
-        return "data/"+ap.year+"-"+ap.month+"-"+ap.day+"/"
+        return self.DOWNLOADED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"
     def download_and_get_web_page(self,ap):
         folder_name = self.get_folder_name(ap)
         link = self.get_link_from_parameters(ap)

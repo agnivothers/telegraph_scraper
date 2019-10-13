@@ -3,3 +3,4 @@ geckodriver.log
 code/__pycache__
 code/login_credentials.py
 .cache
+data/
