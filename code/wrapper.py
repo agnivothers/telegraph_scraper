@@ -20,7 +20,11 @@ def main():
 
     for div_id in all_div_ids:
         print("-------------------------------------------------------------")
-        ts.get_news_text(div_id)
+        title = ts.get_title(div_id)
+        print(title)
+        print("-------------------------------------------------------------")
+        text = ts.get_news_text(div_id)
+        print(text)
         """
         link = ts.get_link_from_parameters(ap)
         print(link)

@@ -97,15 +97,19 @@ class TelegraphScraper:
 
     def get_title(self, div_id):
         #print(div_id)
-        print(type(div_id))
-        title = div_id.find(class_="sub_head  haedlinesstory1")
-        print(title)
+        #print(type(div_id))
+        title = div_id.find(class_="sub_head haedlinesstory1")
+        if title == None:
+            title = div_id.find(class_="books_text haedlinesstory1")
+        #print(title.string)
         #soup = BeautifulSoup(div_id,"lxml")
         """
         title = soup.find("title")
-        return title.string
         """
+        return title.string.strip()
+
     def get_news_text(self,div_id):
+        #print(div_id)
         #self.maxDiff = None
         news_text = ''
         text_tag_collection = div_id.find_all(class_="p_txt_kj")
@@ -120,7 +124,7 @@ class TelegraphScraper:
             #print("Printing tags ...")
             #print(tag.string)
             #text = tag.
-        print(news_text)
+        #print(news_text)
         return news_text
 
     def get_news_text_from_first_tag(self,first_tag):

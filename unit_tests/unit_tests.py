@@ -81,13 +81,13 @@ class TelegraphHomePageTest(unittest.TestCase):
         for id in all_div_ids:
             print(id)
         """
-    """
+
     def test_get_title(self):
         all_div_ids = self.get_div_ids()
-        title1 = self.ts.get_news_text(all_div_ids[7])
-        title2 = 'Riot relief delay rap on Gujarat '
+        title1 = self.ts.get_title(all_div_ids[0])
+        title2 = 'Riot relief delay rap on Gujarat'
         self.assertEqual(title1, title2, "The titles did not match.")
-    """
+
     def test_get_news_text(self):
         self.maxDiff = None
         all_div_ids = self.get_div_ids()
