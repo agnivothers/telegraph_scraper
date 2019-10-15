@@ -95,7 +95,7 @@ class TelegraphScraper:
         all_div_ids = soup.find_all(id=id_regex)
         return all_div_ids
 
-    def get_title(self, div_id):
+    def get_news_title(self, div_id):
         #print(div_id)
         #print(type(div_id))
         title = div_id.find(class_="sub_head haedlinesstory1")

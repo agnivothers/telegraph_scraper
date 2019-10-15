@@ -84,7 +84,7 @@ class TelegraphHomePageTest(unittest.TestCase):
 
     def test_get_title(self):
         all_div_ids = self.get_div_ids()
-        title1 = self.ts.get_title(all_div_ids[0])
+        title1 = self.ts.get_news_title(all_div_ids[0])
         title2 = 'Riot relief delay rap on Gujarat'
         self.assertEqual(title1, title2, "The titles did not match.")
 
@@ -112,7 +112,7 @@ class TelegraphHomePageTest(unittest.TestCase):
     """
     def test_get_title(self):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
-        title1 = self.ts.get_title(file_name)
+        title1 = self.ts.get_news_title(file_name)
         title2 = 'Riot relief delay rap on Gujarat '
         self.assertEqual(title1, title2,"The titles did not match.")
 
