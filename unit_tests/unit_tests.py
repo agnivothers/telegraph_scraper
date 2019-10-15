@@ -16,43 +16,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         ap.day = "01"
         ap.page_no = 1
         self.ap = ap
-    """
-    def test_telegraph_archive_page_url_load(self):
-        browser = self.ts.get_browser()
-        browser = self.ts.get_telegraph_archive_home_page(browser)
-        self.assertIn('', browser.title)
-    def test_access_a_particular_date(self):
-        browser = self.ts.get_browser()
-        browser = self.ts.access_archive_of_date(browser,"2019","10","01")
-        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 1',browser.title,msg="The Title for a particular date did not match")
-    def test_access_a_particular_date_and_page_no(self):
-        browser = self.ts.get_browser()
-        browser = self.ts.access_archive_of_date_and_page_no(browser,"2019","10","01",10)
-        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 10',browser.title,msg="The Title or page number for a particular date and page number did not match")
-    
-    def test_get_maps(self):
-        #browser = self.ts.get_browser()
-        #browser = self.ts.access_archive_of_date_and_page_no(browser, "2019", "10", "01", 1)
-        maps1 = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
-        #print((type(map1)))
-        maps2 = self.get_maps_for_2019_10_01()
 
-        self.assertEqual(maps1,maps2,"The maps did not match.")
-    
-    def test_get_map(self):
-        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
-        map_collection1 = self.ts.get_map_collection(maps)
-        map_collection2 = self.get_map_collection_for_2019_10_01()
-        self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
-    
-    def test_get_link_from_tag(self):
-        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
-        map_collection1 = self.ts.get_map_collection(maps)
-        link1 = self.ts.get_link_from_tag(map_collection1[0],self.ap)
-        link2 = self.get_first_link_from_tag_for_2019_10_01()
-        self.assertEqual(link1, link2,"The links did not match.")
-            
-    """
     def test_get_variable_parameters_from_tag(self):
         maps = self.ts.get_maps_for_date_and_page_no(self.ap)
         map_collection1 = self.ts.get_map_collection(maps)
@@ -77,10 +41,6 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_bsobject_from_downloaded_file(self):
         all_div_ids = self.get_div_ids()
         self.assertEqual(9,len(all_div_ids),"The number of div ids do not match.")
-        """
-        for id in all_div_ids:
-            print(id)
-        """
 
     def test_get_title(self):
         all_div_ids = self.get_div_ids()
@@ -109,7 +69,43 @@ class TelegraphHomePageTest(unittest.TestCase):
         map_collection1 = self.ts.get_map_collection(maps)
         ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
         return ap
+
     """
+    def test_telegraph_archive_page_url_load(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.get_telegraph_archive_home_page(browser)
+        self.assertIn('', browser.title)
+    def test_access_a_particular_date(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.access_archive_of_date(browser,"2019","10","01")
+        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 1',browser.title,msg="The Title for a particular date did not match")
+    def test_access_a_particular_date_and_page_no(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.access_archive_of_date_and_page_no(browser,"2019","10","01",10)
+        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 10',browser.title,msg="The Title or page number for a particular date and page number did not match")
+
+    def test_get_maps(self):
+        #browser = self.ts.get_browser()
+        #browser = self.ts.access_archive_of_date_and_page_no(browser, "2019", "10", "01", 1)
+        maps1 = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        #print((type(map1)))
+        maps2 = self.get_maps_for_2019_10_01()
+
+        self.assertEqual(maps1,maps2,"The maps did not match.")
+
+    def test_get_map(self):
+        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        map_collection1 = self.ts.get_map_collection(maps)
+        map_collection2 = self.get_map_collection_for_2019_10_01()
+        self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
+
+    def test_get_link_from_tag(self):
+        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
+        map_collection1 = self.ts.get_map_collection(maps)
+        link1 = self.ts.get_link_from_tag(map_collection1[0],self.ap)
+        link2 = self.get_first_link_from_tag_for_2019_10_01()
+        self.assertEqual(link1, link2,"The links did not match.")
+
     def test_get_title(self):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         title1 = self.ts.get_news_title(file_name)
@@ -186,4 +182,4 @@ class TelegraphHomePageTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main() 
+    unittest.main()
