@@ -6,7 +6,7 @@ def main():
     ap.year = "2019"
     ap.month = "10"
     ap.day = "01"
-    ap.page_no=1
+    ap.page_no=4
     fsp = telegraph_scraper.FileStorageParameters()
     fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
     fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
@@ -24,6 +24,7 @@ def main():
         print("-------------------------------------------------------------")
         text = ts.get_news_text(div_id)
         print(text)
+        ts.save_extracted_data(title,text,ap,fsp)
 
     print("Wrapper program completed.")
 if __name__=="__main__":

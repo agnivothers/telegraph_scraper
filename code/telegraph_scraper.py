@@ -98,7 +98,10 @@ class TelegraphScraper:
         return text
 
     def save_extracted_data(self,title,text,ap, fsp):
-        file_path = self.get_folder_name_to_store_extracted_data(ap,fsp)+title
+        folder_name = self.get_folder_name_to_store_extracted_data(ap, fsp)
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+        file_path = folder_name+title
         with open(file_path, 'w') as f:
             f.write(text)
         return file_path
