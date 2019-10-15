@@ -3,8 +3,6 @@ from selenium import webdriver
 from code import telegraph_scraper
 from selenium.webdriver.support.wait import WebDriverWait
 
-
-
 class TelegraphHomePageTest(unittest.TestCase):
 
     def setUp(self):
@@ -70,64 +68,6 @@ class TelegraphHomePageTest(unittest.TestCase):
         ap = self.ts.get_variable_parameters_from_tag(map_collection1[0],self.ap)
         return ap
 
-    """
-    def test_telegraph_archive_page_url_load(self):
-        browser = self.ts.get_browser()
-        browser = self.ts.get_telegraph_archive_home_page(browser)
-        self.assertIn('', browser.title)
-    def test_access_a_particular_date(self):
-        browser = self.ts.get_browser()
-        browser = self.ts.access_archive_of_date(browser,"2019","10","01")
-        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 1',browser.title,msg="The Title for a particular date did not match")
-    def test_access_a_particular_date_and_page_no(self):
-        browser = self.ts.get_browser()
-        browser = self.ts.access_archive_of_date_and_page_no(browser,"2019","10","01",10)
-        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 10',browser.title,msg="The Title or page number for a particular date and page number did not match")
-
-    def test_get_maps(self):
-        #browser = self.ts.get_browser()
-        #browser = self.ts.access_archive_of_date_and_page_no(browser, "2019", "10", "01", 1)
-        maps1 = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
-        #print((type(map1)))
-        maps2 = self.get_maps_for_2019_10_01()
-
-        self.assertEqual(maps1,maps2,"The maps did not match.")
-
-    def test_get_map(self):
-        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
-        map_collection1 = self.ts.get_map_collection(maps)
-        map_collection2 = self.get_map_collection_for_2019_10_01()
-        self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
-
-    def test_get_link_from_tag(self):
-        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
-        map_collection1 = self.ts.get_map_collection(maps)
-        link1 = self.ts.get_link_from_tag(map_collection1[0],self.ap)
-        link2 = self.get_first_link_from_tag_for_2019_10_01()
-        self.assertEqual(link1, link2,"The links did not match.")
-
-    def test_get_title(self):
-        file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
-        title1 = self.ts.get_news_title(file_name)
-        title2 = 'Riot relief delay rap on Gujarat '
-        self.assertEqual(title1, title2,"The titles did not match.")
-
-
-    def test_get_news_text(self):
-        self.maxDiff = None
-        link = self.get_first_link_from_tag_for_2019_10_01()
-        text1 = self.ts.get_news_text(self.ap)
-        text2 = self.get_news_text_for_2019_10_01()
-        self.assertEqual(text1,text2,"The news texts did not match.")
-    
-    def test_get_news_text_from_first_tag(self):
-        first_tag = self.get_first_tag_2019_10_01()
-        text1 = self.ts.get_news_text_from_first_tag(first_tag)
-        text2 = ' Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes'
-        self.assertEqual(text1,text2)
-    def get_first_tag_2019_10_01(self):
-        return '<p class="p_txt_kj"><span style="font-weight:bold">Mumbai:</span> Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes".</p>'
-    """
     def get_saved_web_page_file_name_for_2019_01_01_page_01(self):
         return 'data/downloaded_data/2019-10-01/1'
     def get_news_text_for_2019_10_01(self):
@@ -183,3 +123,62 @@ class TelegraphHomePageTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+    """
+    def test_telegraph_archive_page_url_load(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.get_telegraph_archive_home_page(browser)
+        self.assertIn('', browser.title)
+    def test_access_a_particular_date(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.access_archive_of_date(browser,"2019","10","01")
+        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 1',browser.title,msg="The Title for a particular date did not match")
+    def test_access_a_particular_date_and_page_no(self):
+        browser = self.ts.get_browser()
+        browser = self.ts.access_archive_of_date_and_page_no(browser,"2019","10","01",10)
+        self.assertEqual('Telegraph india epaper Calcutta 01 Oct 2019 | Page 10',browser.title,msg="The Title or page number for a particular date and page number did not match")
+
+    def test_get_maps(self):
+        #browser = self.ts.get_browser()
+        #browser = self.ts.access_archive_of_date_and_page_no(browser, "2019", "10", "01", 1)
+        maps1 = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        #print((type(map1)))
+        maps2 = self.get_maps_for_2019_10_01()
+
+        self.assertEqual(maps1,maps2,"The maps did not match.")
+
+    def test_get_map(self):
+        maps = self.ts.get_maps_for_date_and_page_no("2019", "10", "01", 1)
+        map_collection1 = self.ts.get_map_collection(maps)
+        map_collection2 = self.get_map_collection_for_2019_10_01()
+        self.assertEqual(map_collection1, map_collection2,"The map collections did not match.")
+
+    def test_get_link_from_tag(self):
+        maps = self.ts.get_maps_for_date_and_page_no(self.ap)
+        map_collection1 = self.ts.get_map_collection(maps)
+        link1 = self.ts.get_link_from_tag(map_collection1[0],self.ap)
+        link2 = self.get_first_link_from_tag_for_2019_10_01()
+        self.assertEqual(link1, link2,"The links did not match.")
+
+    def test_get_title(self):
+        file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
+        title1 = self.ts.get_news_title(file_name)
+        title2 = 'Riot relief delay rap on Gujarat '
+        self.assertEqual(title1, title2,"The titles did not match.")
+
+
+    def test_get_news_text(self):
+        self.maxDiff = None
+        link = self.get_first_link_from_tag_for_2019_10_01()
+        text1 = self.ts.get_news_text(self.ap)
+        text2 = self.get_news_text_for_2019_10_01()
+        self.assertEqual(text1,text2,"The news texts did not match.")
+
+    def test_get_news_text_from_first_tag(self):
+        first_tag = self.get_first_tag_2019_10_01()
+        text1 = self.ts.get_news_text_from_first_tag(first_tag)
+        text2 = ' Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes'
+        self.assertEqual(text1,text2)
+    def get_first_tag_2019_10_01(self):
+        return '<p class="p_txt_kj"><span style="font-weight:bold">Mumbai:</span> Former Reserve Bank of India governor Raghuram Rajan has said that people in authority have to tolerate criticism and that any move to suppress it "is a sure fire recipe for policy mistakes".</p>'
+    """
