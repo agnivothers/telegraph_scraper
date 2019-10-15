@@ -97,8 +97,11 @@ class TelegraphScraper:
         text = first_tag.text
         return text
 
-    def save_extracted_data(self,title,text,fsp):
-        return ''
+    def save_extracted_data(self,title,text,ap, fsp):
+        file_path = self.get_folder_name_to_store_extracted_data(ap,fsp)+title
+        with open(file_path, 'w') as f:
+            f.write(text)
+        return file_path
 
     """
     def greeting(self,name):

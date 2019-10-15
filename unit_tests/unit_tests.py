@@ -80,7 +80,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         fsp = self.fsp
         title = self.get_news_title_for_2019_10_01()
         text = self.get_news_text_for_2019_10_01()
-        file_path1 = self.ts.save_extracted_data(title,text,fsp)
+        file_path1 = self.ts.save_extracted_data(title,text, ap, fsp)
         file_path2 = self.get_extracted_data_file_name()
         #text1 = self.get_extracted_data_file_text()
         #text2 = self.get_test_data_extracted_data_file_text()
