@@ -53,7 +53,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         text2 = self.get_news_text_for_2019_10_01()
         self.assertEqual(text1,text2,"The news texts did not match.")
 
-    def test_get_folder_name(self):
+    def test_get_folder_name_to_store_downloaded_data(self):
         ap = self.get_filled_up_ap()
         folder_name1 = self.ts.get_folder_name_to_store_downloaded_data(ap)
         folder_name2 = "data/downloaded_data/2019-10-01/"
