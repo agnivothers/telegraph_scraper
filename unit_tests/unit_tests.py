@@ -48,9 +48,12 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_news_title(self):
         all_div_ids = self.get_div_ids()
         title1 = self.ts.get_news_title(all_div_ids[0])
-        title2 = 'Riot relief delay rap on Gujarat'
+        title2 = self.get_news_title_for_2019_10_01()
         self.assertEqual(title1, title2, "The titles did not match.")
 
+    def get_news_title_for_2019_10_01(self):
+        return 'Riot relief delay rap on Gujarat'
+    
     def test_get_news_text(self):
         self.maxDiff = None
         all_div_ids = self.get_div_ids()
@@ -62,14 +65,14 @@ class TelegraphHomePageTest(unittest.TestCase):
         ap = self.get_filled_up_ap()
         fsp = self.fsp
         folder_name1 = self.ts.get_folder_name_to_store_downloaded_data(ap, fsp)
-        folder_name2 = "test_data/downloaded_data/2019-10-01/"
+        folder_name2 = fsp.DOWNLOADED_DATA_ROOT_DIRECTORY+"2019-10-01/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
     def test_get_folder_name_to_store_extracted_data(self):
         ap = self.get_filled_up_ap()
         fsp = self.fsp
         folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap, fsp)
-        folder_name2 = "test_data/extracted_data/2019-10-01/1/"
+        folder_name2 = fsp.EXTRACTED_DATA_ROOT_DIRECTORY+"2019-10-01/1/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
     def test_save_extracted_data(self):
@@ -79,7 +82,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(text1,text2)
 
     def get_extracted_data_file_name(self):
-        return 'test_data/extracted_data/2019-10-01/1/Riot relief delay rap on Gujarat'
+        return self.fsp.EXTRACTED_DATA_ROOT_DIRECTORY+'2019-10-01/1/Riot relief delay rap on Gujarat'
 
     def get_extracted_data_file_text(self):
         file_name = self.get_extracted_data_file_name()
@@ -89,7 +92,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         return text
 
     def get_test_data_extracted_data_file_name(self):
-        return 'test_data/extracted_data/2019-10-01/1/Riot relief delay rap on Gujarat'
+        return self.fsp.EXTRACTED_DATA_ROOT_DIRECTORY+'2019-10-01/1/Riot relief delay rap on Gujarat'
 
     def get_test_data_extracted_data_file_text(self):
         file_name = self.get_test_data_extracted_data_file_name()
@@ -109,7 +112,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         return ap
 
     def get_saved_web_page_file_name_for_2019_01_01_page_01(self):
-        return 'test_data/downloaded_data/2019-10-01/1'
+        return self.fsp.DOWNLOADED_DATA_ROOT_DIRECTORY+'2019-10-01/1'
 
     def get_news_text_for_2019_10_01(self):
         return 'New Delhi: The Supreme Court on Monday got the Gujarat government to undertake to pay Rs 50 lakh to a ' \
