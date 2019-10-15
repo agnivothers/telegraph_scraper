@@ -7,11 +7,14 @@ def main():
     ap.month = "10"
     ap.day = "01"
     ap.page_no=1
+    fsp = telegraph_scraper.FileStorageParameters()
+    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
+    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
     ts = telegraph_scraper.TelegraphScraper()
     maps = ts.get_maps_for_date_and_page_no(ap)
     map_collection = ts.get_map_collection(maps)
     ap = ts.get_variable_parameters_from_tag(map_collection[0], ap)
-    file_name = ts.download_and_get_saved_web_page_path(ap)
+    file_name = ts.download_and_get_saved_web_page_path(ap, fsp)
     all_div_ids = ts.get_div_ids_from_downloaded_file(file_name)
 
     for div_id in all_div_ids:

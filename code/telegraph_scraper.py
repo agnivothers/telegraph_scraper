@@ -9,14 +9,16 @@ class ArchiveParameters:
     year    = ""
     month   = ""
     day     = ""
-    page_no = 1
+    page_no = 0
     pophead_variable1 = ""
     pophead_variable2 = ""
     pophead_variable3 = ""
 
+class FileStorageParameters:
+    DOWNLOADED_DATA_ROOT_DIRECTORY = ''
+    EXTRACTED_DATA_ROOT_DIRECTORY = ''
+
 class TelegraphScraper:
-    DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
-    EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
 
     def get_maps_for_date_and_page_no(self,ap):
         year_first_date_string = ap.year + "-" + ap.month + "-" + ap.day
@@ -48,14 +50,14 @@ class TelegraphScraper:
             .format(ap.pophead_variable1,ap.pophead_variable2,ap.pophead_variable3,ap.page_no,ap.day,ap.month,ap.year)
         return link
 
-    def get_folder_name_to_store_downloaded_data(self, ap):
-        return self.DOWNLOADED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"
+    def get_folder_name_to_store_downloaded_data(self, ap, fsp):
+        return fsp.DOWNLOADED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"
 
-    def get_folder_name_to_store_extracted_data(self, ap):
-        return self.EXTRACTED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"+str(ap.page_no)+"/"
+    def get_folder_name_to_store_extracted_data(self, ap, fsp):
+        return fsp.EXTRACTED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"+str(ap.page_no)+"/"
 
-    def download_and_get_saved_web_page_path(self, ap):
-        folder_name = self.get_folder_name_to_store_downloaded_data(ap)
+    def download_and_get_saved_web_page_path(self, ap, fsp):
+        folder_name = self.get_folder_name_to_store_downloaded_data(ap, fsp)
         link = self.get_link_from_parameters(ap)
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)

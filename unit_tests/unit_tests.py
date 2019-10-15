@@ -14,6 +14,10 @@ class TelegraphHomePageTest(unittest.TestCase):
         ap.day = "01"
         ap.page_no = 1
         self.ap = ap
+        fsp = telegraph_scraper.FileStorageParameters()
+        fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'test_data/downloaded_data/'
+        fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'test_data/extracted_data/'
+        self.fsp = fsp
 
     def test_get_variable_parameters_from_tag(self):
         maps = self.ts.get_maps_for_date_and_page_no(self.ap)
@@ -31,8 +35,9 @@ class TelegraphHomePageTest(unittest.TestCase):
 
     def test_download_and_get_saved_web_page_path(self):
         ap = self.get_filled_up_ap()
+        fsp = self.fsp
         #link = self.ts.get_link_from_parameters(ap)
-        path1 = self.ts.download_and_get_saved_web_page_path(ap)
+        path1 = self.ts.download_and_get_saved_web_page_path(ap, fsp)
         path2 = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         self.assertEqual(path1,path2,"The downloaded texts did not match.")
 
@@ -55,14 +60,16 @@ class TelegraphHomePageTest(unittest.TestCase):
 
     def test_get_folder_name_to_store_downloaded_data(self):
         ap = self.get_filled_up_ap()
-        folder_name1 = self.ts.get_folder_name_to_store_downloaded_data(ap)
-        folder_name2 = "data/downloaded_data/2019-10-01/"
+        fsp = self.fsp
+        folder_name1 = self.ts.get_folder_name_to_store_downloaded_data(ap, fsp)
+        folder_name2 = "test_data/downloaded_data/2019-10-01/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
     def test_get_folder_name_to_store_extracted_data(self):
         ap = self.get_filled_up_ap()
-        folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap)
-        folder_name2 = "data/extracted_data/2019-10-01/1/"
+        fsp = self.fsp
+        folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap, fsp)
+        folder_name2 = "test_data/extracted_data/2019-10-01/1/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
     def test_save_extracted_data(self):
@@ -72,7 +79,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(text1,text2)
 
     def get_extracted_data_file_name(self):
-        return 'data/extracted_data/2019-10-01/1/Riot relief delay rap on Gujarat'
+        return 'test_data/extracted_data/2019-10-01/1/Riot relief delay rap on Gujarat'
 
     def get_extracted_data_file_text(self):
         file_name = self.get_extracted_data_file_name()
@@ -102,7 +109,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         return ap
 
     def get_saved_web_page_file_name_for_2019_01_01_page_01(self):
-        return 'data/downloaded_data/2019-10-01/1'
+        return 'test_data/downloaded_data/2019-10-01/1'
 
     def get_news_text_for_2019_10_01(self):
         return 'New Delhi: The Supreme Court on Monday got the Gujarat government to undertake to pay Rs 50 lakh to a ' \
