@@ -4,8 +4,8 @@ def main():
     print("Wrapper program started ...")
     ap = telegraph_scraper.ArchiveParameters()
     ap.year = "2019"
-    ap.month = "09"
-    ap.day = "20"
+    ap.month = "10"
+    ap.day = "01"
     ap.page_no=1
     ts = telegraph_scraper.TelegraphScraper()
     """

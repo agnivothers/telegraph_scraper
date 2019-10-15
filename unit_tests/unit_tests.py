@@ -81,13 +81,19 @@ class TelegraphHomePageTest(unittest.TestCase):
         for id in all_div_ids:
             print(id)
         """
-
+    """
     def test_get_title(self):
         all_div_ids = self.get_div_ids()
         title1 = self.ts.get_news_text(all_div_ids[7])
         title2 = 'Riot relief delay rap on Gujarat '
         self.assertEqual(title1, title2, "The titles did not match.")
-
+    """
+    def test_get_news_text(self):
+        self.maxDiff = None
+        all_div_ids = self.get_div_ids()
+        text1 = self.ts.get_news_text(all_div_ids[0])
+        text2 = self.get_news_text_for_2019_10_01()
+        self.assertEqual(text1,text2,"The news texts did not match.")
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
         folder_name1 = self.ts.get_folder_name(ap)
@@ -129,7 +135,20 @@ class TelegraphHomePageTest(unittest.TestCase):
     def get_saved_web_page_file_name_for_2019_01_01_page_01(self):
         return 'data/downloaded_data/2019-10-01/1'
     def get_news_text_for_2019_10_01(self):
-        return ''
+        return 'New Delhi: The Supreme Court on Monday got the Gujarat government to undertake to pay Rs 50 lakh to a ' \
+               'gang-rape victim of the 2002 riots and give her a job "within two weeks", rapping the state for sitting' \
+               ' on its April 22 order granting the same compensation. "Why haven\'t you paid the compensation so far in' \
+               ' terms of our order?" Chief Justice Ranjan Gogoi asked solicitorgeneral Tushar Mehta, who appeared for ' \
+               'the Gujarat government. Mehta said the state wanted to seek a review of the April 22 order, and had ' \
+               'therefore delayed its execution. He sought at least another four weeks. But the chief justice said: ' \
+               '"Even two weeks is more than enoughWhile recording the state\'s undertaking, the bench added at Mehta\'s' \
+               ' request that the directive was being issued in the "peculiar facts and circumstances" of the case, lest' \
+               ' the Rs 50-lakh award become a precedent for all rape cases. The bench, which included Justices S.A. ' \
+               'Bobde and Abdul Nazeer, was hearing a contempt petition from the victim. The woman was aged 21 and five' \
+               ' months pregnant when she was gang-raped by a mob that killed seven of her relatives. After Monday\'s ' \
+               'court order, her husband accused the Gujarat government of "not providing any assistance" all these ' \
+               'years, PTI reported. "The Supreme Court in April ordered compensation within 15 days. It\'s been more ' \
+               'than five months but the state government did not contact us even once," he said..'
 
     def get_map_collection_for_2019_10_01(self):
         return []
