@@ -32,15 +32,15 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_download_and_get_saved_web_page_path(self):
         ap = self.get_filled_up_ap()
         #link = self.ts.get_link_from_parameters(ap)
-        text1 = self.ts.download_and_get_saved_web_page_path(ap)
-        text2 = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
-        self.assertEqual(text1,text2,"The downloaded texts did not match.")
+        path1 = self.ts.download_and_get_saved_web_page_path(ap)
+        path2 = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
+        self.assertEqual(path1,path2,"The downloaded texts did not match.")
 
     def test_get_bsobject_from_downloaded_file(self):
         all_div_ids = self.get_div_ids()
         self.assertEqual(9,len(all_div_ids),"The number of div ids do not match.")
 
-    def test_get_title(self):
+    def test_get_news_title(self):
         all_div_ids = self.get_div_ids()
         title1 = self.ts.get_news_title(all_div_ids[0])
         title2 = 'Riot relief delay rap on Gujarat'
@@ -65,7 +65,31 @@ class TelegraphHomePageTest(unittest.TestCase):
         folder_name2 = "data/extracted_data/2019-10-01/1/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
+    def test_save_extracted_data(self):
+        ap = self.get_filled_up_ap()
+        text1 = self.get_extracted_data_file_text()
+        text2 = self.get_test_data_extracted_data_file_text()
+        self.assertEqual(text1,text2)
 
+    def get_extracted_data_file_name(self):
+        return 'data/extracted_data/2019-10-01/1/Riot relief delay rap on Gujarat'
+
+    def get_extracted_data_file_text(self):
+        file_name = self.get_extracted_data_file_name()
+        with open(file_name, "r") as content_file:
+            text = content_file.read()
+        print(text)
+        return text
+
+    def get_test_data_extracted_data_file_name(self):
+        return 'test_data/extracted_data/2019-10-01/1/Riot relief delay rap on Gujarat'
+
+    def get_test_data_extracted_data_file_text(self):
+        file_name = self.get_test_data_extracted_data_file_name()
+        with open(file_name, "r") as content_file:
+            text = content_file.read()
+        print(text)
+        return text
     def get_div_ids(self):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         all_div_ids = self.ts.get_div_ids_from_downloaded_file(file_name)
