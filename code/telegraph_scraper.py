@@ -97,6 +97,8 @@ class TelegraphScraper:
         text = first_tag.text
         return text
 
+    def save_extracted_data(self,title,text,fsp):
+        return ''
 
     """
     def greeting(self,name):

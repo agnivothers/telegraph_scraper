@@ -53,7 +53,7 @@ class TelegraphHomePageTest(unittest.TestCase):
 
     def get_news_title_for_2019_10_01(self):
         return 'Riot relief delay rap on Gujarat'
-    
+
     def test_get_news_text(self):
         self.maxDiff = None
         all_div_ids = self.get_div_ids()
@@ -77,9 +77,14 @@ class TelegraphHomePageTest(unittest.TestCase):
 
     def test_save_extracted_data(self):
         ap = self.get_filled_up_ap()
-        text1 = self.get_extracted_data_file_text()
-        text2 = self.get_test_data_extracted_data_file_text()
-        self.assertEqual(text1,text2)
+        fsp = self.fsp
+        title = self.get_news_title_for_2019_10_01()
+        text = self.get_news_text_for_2019_10_01()
+        file_path1 = self.ts.save_extracted_data(title,text,fsp)
+        file_path2 = self.get_extracted_data_file_name()
+        #text1 = self.get_extracted_data_file_text()
+        #text2 = self.get_test_data_extracted_data_file_text()
+        self.assertEqual(file_path1,file_path2)
 
     def get_extracted_data_file_name(self):
         return self.fsp.EXTRACTED_DATA_ROOT_DIRECTORY+'2019-10-01/1/Riot relief delay rap on Gujarat'
