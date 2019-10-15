@@ -16,6 +16,7 @@ class ArchiveParameters:
 
 class TelegraphScraper:
     DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
+    EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
 
     def get_maps_for_date_and_page_no(self,ap):
         year_first_date_string = ap.year + "-" + ap.month + "-" + ap.day
@@ -49,6 +50,9 @@ class TelegraphScraper:
 
     def get_folder_name_to_store_downloaded_data(self, ap):
         return self.DOWNLOADED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"
+
+    def get_folder_name_to_store_extracted_data(self, ap):
+        return self.EXTRACTED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"+str(ap.page_no)+"/"
 
     def download_and_get_saved_web_page_path(self, ap):
         folder_name = self.get_folder_name_to_store_downloaded_data(ap)

@@ -59,6 +59,13 @@ class TelegraphHomePageTest(unittest.TestCase):
         folder_name2 = "data/downloaded_data/2019-10-01/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
+    def test_get_folder_name_to_store_extracted_data(self):
+        ap = self.get_filled_up_ap()
+        folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap)
+        folder_name2 = "data/extracted_data/2019-10-01/1/"
+        self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
+
+
     def get_div_ids(self):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         all_div_ids = self.ts.get_div_ids_from_downloaded_file(file_name)
