@@ -47,10 +47,11 @@ class TelegraphScraper:
             .format(ap.pophead_variable1,ap.pophead_variable2,ap.pophead_variable3,ap.page_no,ap.day,ap.month,ap.year)
         return link
 
-    def get_folder_name(self,ap):
+    def get_folder_name_to_store_downloaded_data(self, ap):
         return self.DOWNLOADED_DATA_ROOT_DIRECTORY+ap.year+"-"+ap.month+"-"+ap.day+"/"
+
     def download_and_get_saved_web_page_path(self, ap):
-        folder_name = self.get_folder_name(ap)
+        folder_name = self.get_folder_name_to_store_downloaded_data(ap)
         link = self.get_link_from_parameters(ap)
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
@@ -75,7 +76,6 @@ class TelegraphScraper:
         return title.string.strip()
 
     def get_news_text(self,div_id):
-
         news_text = ''
         text_tag_collection = div_id.find_all(class_="p_txt_kj")
         first_tag = BeautifulSoup(str(text_tag_collection[0]),"lxml")

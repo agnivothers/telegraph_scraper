@@ -52,9 +52,10 @@ class TelegraphHomePageTest(unittest.TestCase):
         text1 = self.ts.get_news_text(all_div_ids[0])
         text2 = self.get_news_text_for_2019_10_01()
         self.assertEqual(text1,text2,"The news texts did not match.")
+
     def test_get_folder_name(self):
         ap = self.get_filled_up_ap()
-        folder_name1 = self.ts.get_folder_name(ap)
+        folder_name1 = self.ts.get_folder_name_to_store_downloaded_data(ap)
         folder_name2 = "data/downloaded_data/2019-10-01/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 
@@ -62,6 +63,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         file_name = self.get_saved_web_page_file_name_for_2019_01_01_page_01()
         all_div_ids = self.ts.get_div_ids_from_downloaded_file(file_name)
         return all_div_ids
+
     def get_filled_up_ap(self):
         maps = self.ts.get_maps_for_date_and_page_no(self.ap)
         map_collection1 = self.ts.get_map_collection(maps)
@@ -70,6 +72,7 @@ class TelegraphHomePageTest(unittest.TestCase):
 
     def get_saved_web_page_file_name_for_2019_01_01_page_01(self):
         return 'data/downloaded_data/2019-10-01/1'
+
     def get_news_text_for_2019_10_01(self):
         return 'New Delhi: The Supreme Court on Monday got the Gujarat government to undertake to pay Rs 50 lakh to a ' \
                'gang-rape victim of the 2002 riots and give her a job "within two weeks", rapping the state for sitting' \
