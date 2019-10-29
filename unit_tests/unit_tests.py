@@ -2,6 +2,8 @@ import unittest
 from selenium import webdriver
 from code import telegraph_scraper
 from selenium.webdriver.support.wait import WebDriverWait
+from datetime import date
+from datetime import timedelta
 
 class TelegraphHomePageTest(unittest.TestCase):
 
@@ -26,6 +28,15 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(self.ap.pophead_variable1,"295380","First pophead variable did not match.")
         self.assertEqual(self.ap.pophead_variable2, "1603269", "Second pophead variable did not match.")
         self.assertEqual(self.ap.pophead_variable3, "4", "Third pophead variable did not match.")
+
+    def test_populate_archive_parameters_from_download_date(self):
+        ap1 = telegraph_scraper.ArchiveParameters()
+        download_date = date(2019,10,1)
+        ap1 = self.ts.populate_archive_parameters_from_download_date(ap1,download_date)
+        ap2 = self.get_filled_up_ap()
+        self.assertEqual(ap1.year,ap2.year)
+        self.assertEqual(ap1.month, ap2.month)
+        self.assertEqual(ap1.day, ap2.day)
 
     def test_get_link_from_parameters(self):
         ap = self.get_filled_up_ap()
@@ -93,7 +104,7 @@ class TelegraphHomePageTest(unittest.TestCase):
         self.assertEqual(link1,link2)
     def test_get_total_pages(self):
         ap = self.get_filled_up_ap()
-        no_of_pages1 = self.ts.get_total_pages(ap)
+        no_of_pages1 = self.ts.get_total_number_of_pages(ap)
         no_of_pages2 = self.get_number_of_pages_for_2019_01_01()
         self.assertEqual(no_of_pages1,no_of_pages2)
 

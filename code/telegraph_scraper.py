@@ -4,6 +4,9 @@ from urllib import request
 import os
 import wget
 import re
+from datetime import date
+from datetime import timedelta
+import random
 
 class ArchiveParameters:
     year    = ""
@@ -20,12 +23,26 @@ class FileStorageParameters:
 
 class TelegraphScraper:
 
+    def populate_archive_parameters_from_download_date(self,ap,download_date):
+        ap.year = str(download_date.year)
+        if(download_date.month) < 10:
+            ap.month="0"+str(download_date.month)
+        else:
+            ap.month = str(download_date.month)
+        if(download_date.day) < 10:
+            ap.day="0"+str(download_date.day)
+        else:
+            ap.day = str(download_date.day)
+        return ap
+
+    def get_random_integer(self):
+        return random.randint(1,10000000)
     def get_first_page_url(self,ap):
         year_first_date_string = ap.year + "-" + ap.month + "-" + ap.day
         url = "https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(ap.page_no)+"&type=a"
         return url
 
-    def get_total_pages(self,ap):
+    def get_total_number_of_pages(self, ap):
         url = self.get_first_page_url(ap)
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
@@ -112,6 +129,8 @@ class TelegraphScraper:
         folder_name = self.get_folder_name_to_store_extracted_data(ap, fsp)
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
+        if title=='':
+            title = text.split(':')[0]
         file_path = folder_name+title
         with open(file_path, 'w') as f:
             f.write(text)
