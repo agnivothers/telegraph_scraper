@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /epapermain.aspx
+
+User-agent: Googlebot-News
+Disallow: /
