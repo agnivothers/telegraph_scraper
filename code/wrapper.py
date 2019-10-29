@@ -1,16 +1,7 @@
 from code import telegraph_scraper
 
-def main():
-    print("Wrapper program started ...")
-    ap = telegraph_scraper.ArchiveParameters()
-    ap.year = "2019"
-    ap.month = "02"
-    ap.day = "21"
-    ap.page_no=3
-    fsp = telegraph_scraper.FileStorageParameters()
-    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
-    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
-    ts = telegraph_scraper.TelegraphScraper()
+
+def download_and_save_data_from_telegraph_archives(ts, ap, fsp):
     maps = ts.get_maps_for_date_and_page_no(ap)
     map_collection = ts.get_map_collection(maps)
     ap = ts.get_variable_parameters_from_tag(map_collection[0], ap)
@@ -24,9 +15,22 @@ def main():
         print("-------------------------------------------------------------")
         text = ts.get_news_text(div_id)
         print(text)
-        ts.save_extracted_data(title,text,ap,fsp)
+        ts.save_extracted_data(title, text, ap, fsp)
 
+def main():
+    print("Wrapper program started ...")
+    ap = telegraph_scraper.ArchiveParameters()
+    ap.year = "2019"
+    ap.month = "08"
+    ap.day = "21"
+    ap.page_no=8
+    fsp = telegraph_scraper.FileStorageParameters()
+    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
+    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
+    ts = telegraph_scraper.TelegraphScraper()
+    download_and_save_data_from_telegraph_archives(ts, ap, fsp)
     print("Wrapper program completed.")
+
 if __name__=="__main__":
   main()
 
