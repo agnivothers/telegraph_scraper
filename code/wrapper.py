@@ -4,9 +4,9 @@ def main():
     print("Wrapper program started ...")
     ap = telegraph_scraper.ArchiveParameters()
     ap.year = "2019"
-    ap.month = "10"
-    ap.day = "01"
-    ap.page_no=4
+    ap.month = "02"
+    ap.day = "21"
+    ap.page_no=3
     fsp = telegraph_scraper.FileStorageParameters()
     fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
     fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'

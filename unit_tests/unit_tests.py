@@ -86,9 +86,24 @@ class TelegraphHomePageTest(unittest.TestCase):
         #text2 = self.get_test_data_extracted_data_file_text()
         self.assertEqual(file_path1,file_path2)
 
+    def test_get_first_page_url(self):
+        ap = self.get_filled_up_ap()
+        link1 = self.ts.get_first_page_url(ap)
+        link2 = self.get_first_page_url_for_2019_01_01()
+        self.assertEqual(link1,link2)
+    def test_get_total_pages(self):
+        ap = self.get_filled_up_ap()
+        no_of_pages1 = self.ts.get_total_pages(ap)
+        no_of_pages2 = self.get_number_of_pages_for_2019_01_01()
+        self.assertEqual(no_of_pages1,no_of_pages2)
+
+    def get_number_of_pages_for_2019_01_01(self):
+        return 22
     def get_extracted_data_file_name(self):
         return self.fsp.EXTRACTED_DATA_ROOT_DIRECTORY+'2019-10-01/1/Riot relief delay rap on Gujarat'
 
+    def get_first_page_url_for_2019_01_01(self):
+        return "https://epaper.telegraphindia.com/index.php?pagedate=2019-10-01&edcode=71&subcode=71&mod=&pgnum=1&type=a"
     def get_extracted_data_file_text(self):
         file_name = self.get_extracted_data_file_name()
         with open(file_name, "r") as content_file:

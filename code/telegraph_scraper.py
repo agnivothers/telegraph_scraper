@@ -20,9 +20,20 @@ class FileStorageParameters:
 
 class TelegraphScraper:
 
-    def get_maps_for_date_and_page_no(self,ap):
+    def get_first_page_url(self,ap):
         year_first_date_string = ap.year + "-" + ap.month + "-" + ap.day
         url = "https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(ap.page_no)+"&type=a"
+        return url
+
+    def get_total_pages(self,ap):
+        url = self.get_first_page_url(ap)
+        html = request.urlopen(url)
+        soup = BeautifulSoup(html,"lxml")
+        totalpages = soup.find('input', {'id': 'totalpages'}).get('value')
+        return int(totalpages)
+
+    def get_maps_for_date_and_page_no(self,ap):
+        url = self.get_first_page_url(ap)
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         maps = soup.find(attrs={'name':'Maps'})
