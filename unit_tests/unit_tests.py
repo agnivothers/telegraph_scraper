@@ -5,8 +5,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from datetime import date
 from datetime import timedelta
 
-class TelegraphHomePageTest(unittest.TestCase):
 
+class TelegraphHomePageTest(unittest.TestCase):
     def setUp(self):
         ts = telegraph_scraper.TelegraphScraper()
         self.ts = ts # Learning Python Testing, Pg. 88 How to use objects created in setUP method by other methods

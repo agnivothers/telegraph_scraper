@@ -5,3 +5,4 @@ code/login_credentials.py
 .cache
 data/
 test_data
+telegraph_scraper.log

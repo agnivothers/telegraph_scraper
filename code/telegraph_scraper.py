@@ -7,6 +7,8 @@ import re
 from datetime import date
 from datetime import timedelta
 import random
+import logging
+logging.basicConfig(filename='telegraph_scraper.log', level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 
 class ArchiveParameters:
     year    = ""
@@ -47,6 +49,7 @@ class TelegraphScraper:
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         totalpages = soup.find('input', {'id': 'totalpages'}).get('value')
+        logging.debug('Total number of pages: ' + totalpages)
         return int(totalpages)
 
     def get_maps_for_date_and_page_no(self,ap):

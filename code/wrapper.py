@@ -1,7 +1,7 @@
 from code import telegraph_scraper
 from datetime import date
 from datetime import timedelta
-
+import os
 """
     ap.year = "2019"
     ap.month = "08"
@@ -33,7 +33,14 @@ def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
         ts.save_extracted_data(title, text, ap, fsp)
 
 def main():
+
     print("Wrapper program started ...")
+
+    if os.path.isfile('telegraph_scraper.log'):
+      os.remove('telegraph_scraper.log')
+    else:    ## Show an error ##
+      print("Error: %s file not found - " % 'telegraph_scraper.log')
+
     ts = telegraph_scraper.TelegraphScraper()
 
     fsp = telegraph_scraper.FileStorageParameters()
