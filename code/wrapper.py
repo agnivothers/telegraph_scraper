@@ -68,7 +68,7 @@ def main():
 
     start_date = date(2018,6,1)
     download_date = start_date
-    end_date = date(2018,6,2)
+    end_date = date(2018,6,8)
 
     while(download_date!=end_date):
         """
