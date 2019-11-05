@@ -49,12 +49,12 @@ class TelegraphScraper:
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         totalpages = soup.find('input', {'id': 'totalpages'}).get('value')
-        #logging.debug('Total number of pages: ' + totalpages)
+        logging.debug('TOTAL NUMBER OF PAGES: ' + totalpages)
         return int(totalpages)
 
     def get_maps_for_date_and_page_no(self,ap):
         url = self.get_full_page_url(ap)
-        logging.debug(url)
+        logging.debug("FULL PAGE URL: "+url)
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         maps = soup.find(attrs={'name':'Maps'})
@@ -89,9 +89,9 @@ class TelegraphScraper:
             ap.pophead_variable1 = parameters_list[0]
             ap.pophead_variable2 = parameters_list[1]
             ap.pophead_variable3 = parameters_list[2]
-            logging.debug('pophead_variable1: '+ap.pophead_variable1)
-            logging.debug('pophead_variable2: ' + ap.pophead_variable2)
-            logging.debug('pophead_variable3: ' + ap.pophead_variable3)
+            #logging.debug('pophead_variable1: '+ap.pophead_variable1)
+            #logging.debug('pophead_variable2: ' + ap.pophead_variable2)
+            #logging.debug('pophead_variable3: ' + ap.pophead_variable3)
         except Exception as e:
             logging.debug(e)
 

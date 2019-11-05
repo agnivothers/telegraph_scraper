@@ -26,7 +26,7 @@ def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
     maps = ts.get_maps_for_date_and_page_no(ap)
     map_collection = ts.get_map_collection(maps)
     if map_collection is None:
-        logging.debug("No news on " + ap.day + "-" + ap.month + "-" + ap.year + " for page number: " + str(ap.page_no))
+        logging.debug("NO NEWS ON " + ap.day + "-" + ap.month + "-" + ap.year + " FOR PAGE NO: " + str(ap.page_no))
         return
 
     #ap = ts.get_variable_parameters_from_tag(map_collection[0], ap, function_name_to_replace)
