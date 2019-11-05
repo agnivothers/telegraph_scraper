@@ -31,9 +31,9 @@ def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
 
     #ap = ts.get_variable_parameters_from_tag(map_collection[0], ap, function_name_to_replace)
     ap = ts.get_variable_parameters_from_tag(map_collection[0], ap)
-    logging.debug('pophead_variable1: '+ap.pophead_variable1)
-    logging.debug('pophead_variable2: '+ap.pophead_variable2)
-    logging.debug('pophead_variable3: '+ ap.pophead_variable1)
+    #logging.debug('pophead_variable1: '+ap.pophead_variable1)
+    #logging.debug('pophead_variable2: '+ap.pophead_variable2)
+    #logging.debug('pophead_variable3: '+ ap.pophead_variable1)
     file_name = ts.download_and_get_saved_web_page_path(ap, fsp)
     print(file_name)
     """
