@@ -14,15 +14,15 @@ def download_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     ap = ts.populate_archive_parameters_from_download_date(ap,download_date)
     total_number_of_pages = ts.get_total_number_of_pages(ap)
     for page_no in range(1,total_number_of_pages):
-    #for page_no in range(3, 4):
+    #for page_no in range(4,6):
         ap.page_no = page_no
         download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp)
 
 def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
-    logging.debug('DAY: '+ap.day)
-    logging.debug('MONTH: '+ap.month)
-    logging.debug('YEAR: '+ ap.year)
-    logging.debug('PAGE NUMBER: ' + str(ap.page_no))
+    logging.debug('day: '+ap.day)
+    logging.debug('month: '+ap.month)
+    logging.debug('year: '+ ap.year)
+    logging.debug('page number: ' + str(ap.page_no))
     maps = ts.get_maps_for_date_and_page_no(ap)
     map_collection = ts.get_map_collection(maps)
     if map_collection is None:
@@ -66,7 +66,7 @@ def main():
     ap = telegraph_scraper.ArchiveParameters()
 
 
-    start_date = date(2018,6,1)
+    start_date = date(2018,6,3)
     download_date = start_date
     end_date = date(2018,6,8)
 

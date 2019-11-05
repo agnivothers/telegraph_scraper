@@ -1,6 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from urllib import request
+from urllib import error
 import os
 import wget
 import re
@@ -49,12 +50,12 @@ class TelegraphScraper:
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         totalpages = soup.find('input', {'id': 'totalpages'}).get('value')
-        logging.debug('TOTAL NUMBER OF PAGES: ' + totalpages)
+        logging.debug('total number of pages: ' + totalpages)
         return int(totalpages)
 
     def get_maps_for_date_and_page_no(self,ap):
         url = self.get_full_page_url(ap)
-        logging.debug("FULL PAGE URL: "+url)
+        logging.debug("full page url: "+url)
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         maps = soup.find(attrs={'name':'Maps'})
@@ -116,7 +117,7 @@ class TelegraphScraper:
         # link = https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html
         link =  "https://epaper.telegraphindia.com/textview_{0}_{1}_{2}_1_{3}_{4}-{5}-{6}_71_1.html"\
             .format(ap.pophead_variable1,ap.pophead_variable2,ap.pophead_variable3,ap.page_no,ap.day,ap.month,ap.year)
-        logging.debug('LINK: '+link)
+        logging.debug('link: '+link)
         return link
 
     def get_folder_name_to_store_downloaded_data(self, ap, fsp):
@@ -133,7 +134,12 @@ class TelegraphScraper:
         file_name = folder_name+str(ap.page_no)
         if os.path.exists(file_name):
             os.remove(file_name)
-        wget.download(link, file_name)
+        try:
+            wget.download(link, file_name)
+        except error.HTTPError as he:
+            logging.debug("PROBLEM WITH LINK: "+link)
+            logging.debug("CANNOT DOWNLOAD FOR " + ap.day + "-" + ap.month + "-" + ap.year + " FOR PAGE NO: " + str(ap.page_no))
+            logging.debug(he)
         return file_name
 
     def get_div_ids_from_downloaded_file(self, file_name):
