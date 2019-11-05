@@ -39,46 +39,84 @@ class TelegraphScraper:
 
     def get_random_integer(self):
         return random.randint(1,10000000)
-    def get_first_page_url(self,ap):
+    def get_full_page_url(self, ap):
         year_first_date_string = ap.year + "-" + ap.month + "-" + ap.day
         url = "https://epaper.telegraphindia.com/index.php?pagedate="+year_first_date_string+"&edcode=71&subcode=71&mod=&pgnum="+str(ap.page_no)+"&type=a"
         return url
 
     def get_total_number_of_pages(self, ap):
-        url = self.get_first_page_url(ap)
+        url = self.get_full_page_url(ap)
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         totalpages = soup.find('input', {'id': 'totalpages'}).get('value')
-        logging.debug('Total number of pages: ' + totalpages)
+        #logging.debug('Total number of pages: ' + totalpages)
         return int(totalpages)
 
     def get_maps_for_date_and_page_no(self,ap):
-        url = self.get_first_page_url(ap)
+        url = self.get_full_page_url(ap)
+        logging.debug(url)
         html = request.urlopen(url)
         soup = BeautifulSoup(html,"lxml")
         maps = soup.find(attrs={'name':'Maps'})
+        #logging.debug(maps)
         return maps
     def get_map_collection(self,maps):
         map_collection_all = maps.find_all_next("area")
         map_collection = []
+        function_name_to_replace = ''
+        #logging.debug('map_collection_all: '+str(map_collection_all))
         for tag in map_collection_all:
             if "show_pophead" in str(tag):
+                #function_name_to_replace = 'show_pophead'
                 map_collection.append(tag)
-        return map_collection
+            """
+            else:
+                if "show_pop" in str(tag):
+                    function_name_to_replace = 'show_pop'
+                    map_collection.append(tag)
+            """
+        if len(map_collection)==0:
+            return None
+        else:
+            return map_collection
 
-    def get_variable_parameters_from_tag(self,tag,ap):
+    #def get_variable_parameters_from_tag(self,tag,ap,function_name_to_replace):
+    def get_variable_parameters_from_tag(self, tag, ap):
+        try:
+            onclick_signature_for_textview = tag.attrs['onclick']
+            parameters = onclick_signature_for_textview.replace('return show_pophead(','').replace(')','').replace('\'','')
+            parameters_list = parameters.split(',')
+            ap.pophead_variable1 = parameters_list[0]
+            ap.pophead_variable2 = parameters_list[1]
+            ap.pophead_variable3 = parameters_list[2]
+            logging.debug('pophead_variable1: '+ap.pophead_variable1)
+            logging.debug('pophead_variable2: ' + ap.pophead_variable2)
+            logging.debug('pophead_variable3: ' + ap.pophead_variable3)
+        except Exception as e:
+            logging.debug(e)
+
+        """
         onclick_signature_for_textview = tag.attrs['onclick']
-        parameters = onclick_signature_for_textview.replace('return show_pophead(','').replace(')','').replace('\'','')
+        logging.debug('onclick_signature_for_textview: '+onclick_signature_for_textview)
+        logging.debug('function_name_to_replace: '+function_name_to_replace)
+        #parameters = onclick_signature_for_textview.replace('return '+ function_name_to_replace+'(', '').replace(')', '').replace('\'','')
+        function_name_replaced = onclick_signature_for_textview.replace('return '+ function_name_to_replace+'(', '')
+        logging.debug('function_name_replaced: '+function_name_replaced)
+        parameters = onclick_signature_for_textview.replace('return '+ function_name_to_replace+'(', '').replace(')', '').replace('\'','')
+
+        logging.debug('PARAMETERS: '+parameters)
         parameters_list = parameters.split(',')
         ap.pophead_variable1 = parameters_list[0]
         ap.pophead_variable2 = parameters_list[1]
         ap.pophead_variable3 = parameters_list[2]
+        """
         return ap
 
     def get_link_from_parameters(self,ap):
         # link = https://epaper.telegraphindia.com/textview_295380_1603269_4_1_1_01-10-2019_71_1.html
         link =  "https://epaper.telegraphindia.com/textview_{0}_{1}_{2}_1_{3}_{4}-{5}-{6}_71_1.html"\
             .format(ap.pophead_variable1,ap.pophead_variable2,ap.pophead_variable3,ap.page_no,ap.day,ap.month,ap.year)
+        logging.debug('LINK: '+link)
         return link
 
     def get_folder_name_to_store_downloaded_data(self, ap, fsp):
@@ -113,8 +151,12 @@ class TelegraphScraper:
         return title.string.strip()
 
     def get_news_text(self,div_id):
+        logging.debug('div_id: ')
+        logging.debug(div_id)
         news_text = ''
         text_tag_collection = div_id.find_all(class_="p_txt_kj")
+        logging.debug('text_tag_collection: ')
+        logging.debug(text_tag_collection)
         first_tag = BeautifulSoup(str(text_tag_collection[0]),"lxml")
         first_tag.span.unwrap()
         news_text=news_text+first_tag.text
@@ -129,16 +171,31 @@ class TelegraphScraper:
         return text
 
     def save_extracted_data(self,title,text,ap, fsp):
+
         folder_name = self.get_folder_name_to_store_extracted_data(ap, fsp)
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
-        if title=='':
+        if title == '':
             title = text.split(':')[0]
-        file_path = folder_name+title
+        file_path = folder_name + title
         with open(file_path, 'w') as f:
             f.write(text)
         return file_path
 
+        """
+        try:
+            folder_name = self.get_folder_name_to_store_extracted_data(ap, fsp)
+            if not os.path.exists(folder_name):
+                os.makedirs(folder_name)
+            if title=='':
+                title = text.split(':')[0]
+            file_path = folder_name+title
+            with open(file_path, 'w') as f:
+                f.write(text)
+            return file_path
+        except Exception as e:
+            logging.debug(e)
+        """
     """
     def greeting(self,name):
         print("Hello! ",name)

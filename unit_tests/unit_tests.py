@@ -97,9 +97,9 @@ class TelegraphHomePageTest(unittest.TestCase):
         #text2 = self.get_test_data_extracted_data_file_text()
         self.assertEqual(file_path1,file_path2)
 
-    def test_get_first_page_url(self):
+    def test_get_full_page_url(self):
         ap = self.get_filled_up_ap()
-        link1 = self.ts.get_first_page_url(ap)
+        link1 = self.ts.get_full_page_url(ap)
         link2 = self.get_first_page_url_for_2019_01_01()
         self.assertEqual(link1,link2)
     def test_get_total_pages(self):
