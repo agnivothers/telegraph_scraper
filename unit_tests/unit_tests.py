@@ -82,7 +82,7 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_folder_name_to_store_extracted_data(self):
         ap = self.get_filled_up_ap()
         fsp = self.fsp
-        file = "1/"
+        file = "1"
         folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap, fsp, file)
         folder_name2 = fsp.EXTRACTED_DATA_ROOT_DIRECTORY+"2019-10-01/1/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
@@ -90,9 +90,10 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_save_extracted_data(self):
         ap = self.get_filled_up_ap()
         fsp = self.fsp
+        file = "1"
         title = self.get_news_title_for_2019_10_01()
         text = self.get_news_text_for_2019_10_01()
-        file_path1 = self.ts.save_extracted_data(title,text, ap, fsp)
+        file_path1 = self.ts.save_extracted_data(title,text, ap, fsp, file)
         file_path2 = self.get_extracted_data_file_name()
         #text1 = self.get_extracted_data_file_text()
         #text2 = self.get_test_data_extracted_data_file_text()
