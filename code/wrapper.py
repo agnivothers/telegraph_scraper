@@ -66,6 +66,7 @@ def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
         print(text)
         ts.save_extracted_data(title, text, ap, fsp)
     """
+
 def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     ap = ts.populate_archive_parameters_from_download_date(ap, download_date)
     folder_name = ts.get_folder_name_to_store_downloaded_data(ap, fsp)
