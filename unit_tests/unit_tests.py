@@ -82,7 +82,8 @@ class TelegraphHomePageTest(unittest.TestCase):
     def test_get_folder_name_to_store_extracted_data(self):
         ap = self.get_filled_up_ap()
         fsp = self.fsp
-        folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap, fsp)
+        file = "1/"
+        folder_name1 = self.ts.get_folder_name_to_store_extracted_data(ap, fsp, file)
         folder_name2 = fsp.EXTRACTED_DATA_ROOT_DIRECTORY+"2019-10-01/1/"
         self.assertEqual(folder_name1,folder_name2,"The folder names do not match.")
 

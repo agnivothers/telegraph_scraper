@@ -3,12 +3,30 @@ from datetime import date
 from datetime import timedelta
 import os
 import logging
-"""
-    ap.year = "2019"
-    ap.month = "08"
-    ap.day = "21"
-    ap.page_no=8
-"""
+
+def main():
+
+    print("Wrapper program started ...")
+    ts = telegraph_scraper.TelegraphScraper()
+    fsp = telegraph_scraper.FileStorageParameters()
+    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
+    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
+
+    ap = telegraph_scraper.ArchiveParameters()
+
+    start_date = date(2018,6,1)
+    download_date = start_date
+    end_date = date(2018,6,2)
+
+
+    # Loop to download data from the Internet
+    #download_data(ts, ap, fsp, download_date, end_date)
+    print("Data for all dates downloaded.")
+    # Loop to parse the data locally
+    extract_data(ts, ap, fsp, download_date, end_date)
+    print("Data for all dates extracted.")
+    print("Wrapper program completed.")
+
 
 def download_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     ap = ts.populate_archive_parameters_from_download_date(ap,download_date)
@@ -48,45 +66,41 @@ def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
         print(text)
         ts.save_extracted_data(title, text, ap, fsp)
     """
-def main():
+def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
+    ap = ts.populate_archive_parameters_from_download_date(ap, download_date)
+    folder_name = ts.get_folder_name_to_store_downloaded_data(ap, fsp)
+    print(folder_name)
+    files = os.listdir(folder_name)
+    for file in files:
+        file_name = folder_name+'/'+file
+        all_div_ids = ts.get_div_ids_from_downloaded_file(file_name)
+        for div_id in all_div_ids:
+            print("-------------------------------------------------------------")
+            title = ts.get_news_title(div_id)
+            print(title)
+            print("-------------------------------------------------------------")
+            text = ts.get_news_text(div_id)
+            #print(text)
+            try:
+                ts.save_extracted_data(title, text, ap, fsp, file)
+            except Exception as ex:
+                logging.debug("FILE NAME: "+file_name)
+                logging.debug("TITLE: "+title)
+                logging.debug("TEXT: " +text)
+                logging.debug(ex)
 
-    print("Wrapper program started ...")
-    """
-    if os.path.isfile('telegraph_scraper.log'):
-      os.remove('telegraph_scraper.log')
-    else:    ## Show an error ##
-      print("Error: %s file not found - " % 'telegraph_scraper.log')
-    """
-    ts = telegraph_scraper.TelegraphScraper()
 
-    fsp = telegraph_scraper.FileStorageParameters()
-    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
-    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
-
-    ap = telegraph_scraper.ArchiveParameters()
-
-
-    start_date = date(2018,6,3)
-    download_date = start_date
-    end_date = date(2018,6,8)
-
-    while(download_date!=end_date):
-        """
-        try:
-            download_and_save_data_for_particular_date(ts, ap, fsp, download_date)
-        except IndexError as er:
-            logging.debug(er)
-            logging.debug(er.args)
-        """
-
+def download_data(ts, ap, fsp, download_date, end_date):
+    while (download_date != end_date):
         download_and_save_data_for_particular_date(ts, ap, fsp, download_date)
-
-        download_date = download_date+timedelta(days=1)
-
+        download_date = download_date + timedelta(days=1)
     download_and_save_data_for_particular_date(ts, ap, fsp, download_date)
-    print("Data for all dates downloaded.")
 
-    print("Wrapper program completed.")
+def extract_data(ts, ap, fsp, download_date, end_date):
+    while (download_date != end_date):
+        extract_and_save_data_for_particular_date(ts, ap, fsp, download_date)
+        download_date = download_date + timedelta(days=1)
+    extract_and_save_data_for_particular_date(ts, ap, fsp, download_date)
 
 if __name__=="__main__":
   main()
