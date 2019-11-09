@@ -139,7 +139,7 @@ class TelegraphScraper:
         except error.HTTPError as he:
             logging.debug("PROBLEM WITH LINK: "+link)
             logging.debug("CANNOT DOWNLOAD FOR " + ap.day + "-" + ap.month + "-" + ap.year + " FOR PAGE NO: " + str(ap.page_no))
-            logging.debug(he)
+            logging.exception(he)
         return file_name
 
     def get_div_ids_from_downloaded_file(self, file_name):
@@ -157,13 +157,15 @@ class TelegraphScraper:
         return title.string.strip()
 
     def get_news_text(self,div_id):
-        logging.debug('div_id: ')
-        logging.debug(div_id)
+        #logging.debug('div_id: ')
+        #logging.debug(div_id)
         news_text = ''
         text_tag_collection = div_id.find_all(class_="p_txt_kj")
-        logging.debug('text_tag_collection: ')
-        logging.debug(text_tag_collection)
+        #logging.debug('text_tag_collection: ')
+        #logging.debug(text_tag_collection)
+
         first_tag = BeautifulSoup(str(text_tag_collection[0]),"lxml")
+
         first_tag.span.unwrap()
         news_text=news_text+first_tag.text
         for tag in text_tag_collection:
@@ -182,7 +184,7 @@ class TelegraphScraper:
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
         if title == '':
-            title = text.split(':')[0]
+            title = text[:25]
         file_path = folder_name + title
         with open(file_path, 'w') as f:
             f.write(text)

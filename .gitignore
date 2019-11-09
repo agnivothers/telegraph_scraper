@@ -6,3 +6,4 @@ code/login_credentials.py
 data/
 test_data
 telegraph_scraper.log
+data-OLD/

@@ -14,16 +14,16 @@ def main():
 
     ap = telegraph_scraper.ArchiveParameters()
 
-    start_date = date(2018,6,1)
+    start_date = date(2019,5,24)
     download_date = start_date
-    end_date = date(2018,6,2)
+    end_date = date(2019,10,31)
 
 
     # Loop to download data from the Internet
-    #download_data(ts, ap, fsp, download_date, end_date)
+    download_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates downloaded.")
     # Loop to parse the data locally
-    extract_data(ts, ap, fsp, download_date, end_date)
+    #extract_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates extracted.")
     print("Wrapper program completed.")
 
@@ -42,6 +42,9 @@ def download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp):
     logging.debug('year: '+ ap.year)
     logging.debug('page number: ' + str(ap.page_no))
     maps = ts.get_maps_for_date_and_page_no(ap)
+    if maps is None:
+        logging.debug("NO MAPS AND HENCE NO NEWS ON " + ap.day + "-" + ap.month + "-" + ap.year + " FOR PAGE NO: " + str(ap.page_no))
+        return
     map_collection = ts.get_map_collection(maps)
     if map_collection is None:
         logging.debug("NO NEWS ON " + ap.day + "-" + ap.month + "-" + ap.year + " FOR PAGE NO: " + str(ap.page_no))
@@ -73,22 +76,27 @@ def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     print(folder_name)
     files = os.listdir(folder_name)
     for file in files:
-        file_name = folder_name+'/'+file
+        file_name = folder_name+file
         all_div_ids = ts.get_div_ids_from_downloaded_file(file_name)
         for div_id in all_div_ids:
             print("-------------------------------------------------------------")
-            title = ts.get_news_title(div_id)
-            print(title)
-            print("-------------------------------------------------------------")
-            text = ts.get_news_text(div_id)
-            #print(text)
             try:
+                title = ts.get_news_title(div_id)
+                print(title)
+                print("-------------------------------------------------------------")
+                text = ts.get_news_text(div_id)
+                #print(text)
                 ts.save_extracted_data(title, text, ap, fsp, file)
-            except Exception as ex:
+            except IndexError as ie:
+                #logging.debug(ex)
+                logging.exception(ie)
                 logging.debug("FILE NAME: "+file_name)
                 logging.debug("TITLE: "+title)
-                logging.debug("TEXT: " +text)
-                logging.debug(ex)
+                logging.debug("NO BODY TEXT FOR NEWS: ")
+                #logging.debug("TEXT: " +text)
+            except Exception as ex:
+                logging.exception(ex)
+
 
 
 def download_data(ts, ap, fsp, download_date, end_date):
