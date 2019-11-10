@@ -144,8 +144,14 @@ class TelegraphScraper:
 
     def get_div_ids_from_downloaded_file(self, file_name):
         soup = ''
-        with open(file_name, "r") as downloaded_file:
-            soup = BeautifulSoup(downloaded_file, "lxml")
+        try:
+            with open(file_name, "r") as downloaded_file:
+                soup = BeautifulSoup(downloaded_file, "lxml")
+        except UnicodeDecodeError as ude:
+            logging.exception(ude)
+            logging.debug("FILE NAME WHERE UNICODEDECODEERROR OCCURRED: " + file_name)
+            return
+
         id_regex = re.compile("id-\d+")
         all_div_ids = soup.find_all(id=id_regex)
         return all_div_ids

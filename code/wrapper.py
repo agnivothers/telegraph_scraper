@@ -14,9 +14,9 @@ def main():
 
     ap = telegraph_scraper.ArchiveParameters()
 
-    start_date = date(2018,6,26)
+    start_date = date(2018,6,1)
     download_date = start_date
-    end_date = date(2018,6,30)
+    end_date = date(2018,11,30)
 
 
     # Loop to download data from the Internet
@@ -77,7 +77,10 @@ def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     files = os.listdir(folder_name)
     for file in files:
         file_name = folder_name+file
+        logging.debug("FILE NAME FOR EXTRACTING NEWS: "+file_name)
         all_div_ids = ts.get_div_ids_from_downloaded_file(file_name)
+        if all_div_ids is None:
+            continue
         for div_id in all_div_ids:
             print("-------------------------------------------------------------")
             try:
@@ -88,14 +91,14 @@ def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
                 #print(text)
                 ts.save_extracted_data(title, text, ap, fsp, file)
             except IndexError as ie:
-                #logging.debug(ex)
                 logging.exception(ie)
-                logging.debug("FILE NAME: "+file_name)
+                logging.debug("FILE NAME WHERE INDEXERROR OCCURRED: "+file_name)
                 logging.debug("TITLE: "+title)
                 logging.debug("NO BODY TEXT FOR NEWS: ")
                 #logging.debug("TEXT: " +text)
             except Exception as ex:
                 logging.exception(ex)
+
 
 def download_data(ts, ap, fsp, download_date, end_date):
     while (download_date != end_date):
