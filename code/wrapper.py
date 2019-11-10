@@ -16,14 +16,14 @@ def main():
 
     start_date = date(2018,6,1)
     download_date = start_date
-    end_date = date(2018,11,30)
+    end_date = date(2019,11,2)
 
 
     # Loop to download data from the Internet
-    #download_data(ts, ap, fsp, download_date, end_date)
+    download_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates downloaded.")
     # Loop to parse the data locally
-    extract_data(ts, ap, fsp, download_date, end_date)
+    #extract_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates extracted.")
     print("Wrapper program completed.")
 
@@ -31,8 +31,8 @@ def main():
 def download_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     ap = ts.populate_archive_parameters_from_download_date(ap,download_date)
     total_number_of_pages = ts.get_total_number_of_pages(ap)
-    for page_no in range(1,total_number_of_pages):
-    #for page_no in range(4,6):
+    #for page_no in range(1,total_number_of_pages):
+    for page_no in range(total_number_of_pages,total_number_of_pages+1):
         ap.page_no = page_no
         download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp)
 
@@ -91,7 +91,7 @@ def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
                 #print(text)
                 ts.save_extracted_data(title, text, ap, fsp, file)
             except IndexError as ie:
-                logging.exception(ie)
+                #logging.exception(ie)
                 logging.debug("FILE NAME WHERE INDEXERROR OCCURRED: "+file_name)
                 logging.debug("TITLE: "+title)
                 logging.debug("NO BODY TEXT FOR NEWS: ")

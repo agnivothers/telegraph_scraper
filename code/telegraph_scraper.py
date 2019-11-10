@@ -148,7 +148,7 @@ class TelegraphScraper:
             with open(file_name, "r") as downloaded_file:
                 soup = BeautifulSoup(downloaded_file, "lxml")
         except UnicodeDecodeError as ude:
-            logging.exception(ude)
+            #logging.exception(ude)
             logging.debug("FILE NAME WHERE UNICODEDECODEERROR OCCURRED: " + file_name)
             return
 
