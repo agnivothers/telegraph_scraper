@@ -184,7 +184,14 @@ class TelegraphScraper:
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
         if title == '':
-            title = text[:25]
+            title = text[:250]
+            logging.debug("NO TITLE PRESENT, HENCE TAKING FROM TEXT: "+title)
+        if '/' in title:
+            title = title.replace('/','-')
+            logging.debug("TITLE CONTAINED / WHICH IS REPLACED BY - : "+title)
+        if len(title)>250:
+            title = title[:250]
+            logging.debug("HUGE TITLE STRING, HENCE TAKING ONLY FIRST 250 CHARACTERS: " + title)
         file_path = folder_name + title
         with open(file_path, 'w') as f:
             f.write(text)
