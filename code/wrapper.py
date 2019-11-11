@@ -15,15 +15,19 @@ def main():
     ap = telegraph_scraper.ArchiveParameters()
 
     start_date = date(2018,6,1)
+    print("START DATE: "+str(start_date))
     download_date = start_date
-    end_date = date(2019,11,2)
+    end_date = date(2018,11,30)
+    print("END DATE: " + str(end_date))
 
 
     # Loop to download data from the Internet
+    print("Running download_data ...")
     download_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates downloaded.")
     # Loop to parse the data locally
-    #extract_data(ts, ap, fsp, download_date, end_date)
+    print("Running extract_data ...")
+    extract_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates extracted.")
     print("Wrapper program completed.")
 
@@ -97,6 +101,7 @@ def extract_and_save_data_for_particular_date(ts, ap, fsp, download_date):
                 logging.debug("NO BODY TEXT FOR NEWS: ")
                 #logging.debug("TEXT: " +text)
             except Exception as ex:
+                logging.debug("SPECIFIC ERROR NOT CAUGHT. HENCE LOGGING GENERIC ERROR.")
                 logging.exception(ex)
 
 

@@ -139,7 +139,7 @@ class TelegraphScraper:
         except error.HTTPError as he:
             logging.debug("PROBLEM WITH LINK: "+link)
             logging.debug("CANNOT DOWNLOAD FOR " + ap.day + "-" + ap.month + "-" + ap.year + " FOR PAGE NO: " + str(ap.page_no))
-            logging.exception(he)
+            #logging.exception(he)
         return file_name
 
     def get_div_ids_from_downloaded_file(self, file_name):
