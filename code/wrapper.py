@@ -4,39 +4,16 @@ from datetime import timedelta
 import os
 import logging
 
+
 def main():
-
-    print("Wrapper program started ...")
-    ts = telegraph_scraper.TelegraphScraper()
-    fsp = telegraph_scraper.FileStorageParameters()
-    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
-    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
-
-    ap = telegraph_scraper.ArchiveParameters()
-
-    start_date = date(2018,6,1)
-    print("START DATE: "+str(start_date))
-    download_date = start_date
-    end_date = date(2018,11,30)
-    print("END DATE: " + str(end_date))
-
-
-    # Loop to download data from the Internet
-    print("Running download_data ...")
-    download_data(ts, ap, fsp, download_date, end_date)
-    print("Data for all dates downloaded.")
-    # Loop to parse the data locally
-    print("Running extract_data ...")
-    extract_data(ts, ap, fsp, download_date, end_date)
-    print("Data for all dates extracted.")
-    print("Wrapper program completed.")
-
+    #wrapper()
+    download_data_from_exception()
 
 def download_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     ap = ts.populate_archive_parameters_from_download_date(ap,download_date)
     total_number_of_pages = ts.get_total_number_of_pages(ap)
-    #for page_no in range(1,total_number_of_pages):
-    for page_no in range(total_number_of_pages,total_number_of_pages+1):
+    #for page_no in range(2,3):
+    for page_no in range(1,total_number_of_pages+1):
         ap.page_no = page_no
         download_and_save_data_for_particular_date_and_page_number(ts, ap, fsp)
 
@@ -117,6 +94,37 @@ def extract_data(ts, ap, fsp, download_date, end_date):
         download_date = download_date + timedelta(days=1)
     extract_and_save_data_for_particular_date(ts, ap, fsp, download_date)
 
+def wrapper():
+    print("Wrapper program started ...")
+    ts = telegraph_scraper.TelegraphScraper()
+    fsp = telegraph_scraper.FileStorageParameters()
+    fsp.DOWNLOADED_DATA_ROOT_DIRECTORY = 'data/downloaded_data/'
+    fsp.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
+
+    ap = telegraph_scraper.ArchiveParameters()
+
+    start_date = date(2019,4,16)
+    print("START DATE: "+str(start_date))
+    download_date = start_date
+    end_date = date(2019,4,16)
+    print("END DATE: " + str(end_date))
+
+
+    # Loop to download data from the Internet
+    print("Running download_data ...")
+    download_data(ts, ap, fsp, download_date, end_date)
+    print("Data for all dates downloaded.")
+    # Loop to parse the data locally
+    print("Running extract_data ...")
+    extract_data(ts, ap, fsp, download_date, end_date)
+    print("Data for all dates extracted.")
+    print("Wrapper program completed.")
+
+def download_data_from_exception():
+    print("download_data_from_exception program started ...")
+    ts = telegraph_scraper.TelegraphScraper()
+    ts.download_data_that_raised_exception_in_first_pass()
+    print("download_data_from_exception program completed.")
 if __name__=="__main__":
   main()
 

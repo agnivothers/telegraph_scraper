@@ -203,6 +203,37 @@ class TelegraphScraper:
             f.write(text)
         return file_path
 
+    def download_data_that_raised_exception_in_first_pass(self):
+        not_downloaded_links_file = "not.downloaded.links"
+        with open(not_downloaded_links_file,'r') as file_name:
+            ROOT_FOLDER_NAME = 'data/downloaded_data/'
+            for line_no,line in enumerate(file_name):
+                line = line.strip()
+                split_line = line.split("PROBLEM WITH LINK: ")
+                link = split_line[1]
+                parameters = link.split('_')
+                download_missed_page_no = parameters[5]
+                download_missed_date = parameters[6]
+                print(download_missed_date)
+                date_components = download_missed_date.split('-')
+                download_missed_date = date_components[2]+'-'+date_components[1]+'-'+date_components[0]
+                print(download_missed_date)
+                print(download_missed_page_no)
+                folder_name = ROOT_FOLDER_NAME+download_missed_date+'/'
+                if not os.path.exists(folder_name):
+                    logging.debug("FOLDER NAME: "+folder_name+" NOT PRESENT")
+                file_name = folder_name+download_missed_page_no
+                logging.debug(file_name)
+                print()
+                if os.path.exists(file_name):
+                    os.remove(file_name)
+                try:
+                    wget.download(link, file_name)
+                except error.HTTPError as he:
+                    logging.debug("AGAIN PROBLEM WITH LINK: "+link)
+                    logging.debug("AGAIN CANNOT DOWNLOAD FOR " + download_missed_date + " FOR PAGE NO: " + download_missed_page_no)
+
+
         """
         try:
             folder_name = self.get_folder_name_to_store_extracted_data(ap, fsp)
