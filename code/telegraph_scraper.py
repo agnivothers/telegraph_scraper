@@ -214,7 +214,7 @@ class TelegraphScraper:
                 parameters = link.split('_')
                 download_missed_page_no = parameters[5]
                 download_missed_date = parameters[6]
-                print(download_missed_date)
+                #print(download_missed_date)
                 date_components = download_missed_date.split('-')
                 download_missed_date = date_components[2]+'-'+date_components[1]+'-'+date_components[0]
                 print(download_missed_date)
@@ -230,8 +230,8 @@ class TelegraphScraper:
                 try:
                     wget.download(link, file_name)
                 except error.HTTPError as he:
-                    logging.debug("AGAIN PROBLEM WITH LINK: "+link)
-                    logging.debug("AGAIN CANNOT DOWNLOAD FOR " + download_missed_date + " FOR PAGE NO: " + download_missed_page_no)
+                    logging.debug("PROBLEM WITH LINK: "+link)
+                    logging.debug("CANNOT DOWNLOAD FOR " + download_missed_date + " FOR PAGE NO: " + download_missed_page_no)
 
 
         """
