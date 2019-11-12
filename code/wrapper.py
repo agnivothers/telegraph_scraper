@@ -6,8 +6,8 @@ import logging
 
 
 def main():
-    #wrapper()
-    download_data_from_exception()
+    wrapper()
+    #download_data_from_exception()
 
 def download_and_save_data_for_particular_date(ts, ap, fsp, download_date):
     ap = ts.populate_archive_parameters_from_download_date(ap,download_date)
@@ -103,10 +103,10 @@ def wrapper():
 
     ap = telegraph_scraper.ArchiveParameters()
 
-    start_date = date(2019,4,16)
+    start_date = date(2018,6,1)
     print("START DATE: "+str(start_date))
     download_date = start_date
-    end_date = date(2019,4,16)
+    end_date = date(2019,11,11)
     print("END DATE: " + str(end_date))
 
 
