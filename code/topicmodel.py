@@ -1,10 +1,10 @@
 
-def topicmodel():
-    print("Topicmodel program started ...")
+class Topicmodel:
 
-def main():
-    topicmodel()
-    #download_data_from_exception()
+    def get_lemmatized_data(self):
+        print("Started lemmatizing data ...")
+        return ''
 
-if __name__=="__main__":
-  main()
+    def create_LDA_model(self):
+        print("Started creating LDA model ...")
+
