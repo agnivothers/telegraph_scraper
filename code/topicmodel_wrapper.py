@@ -2,6 +2,7 @@ from code import topic_model
 def topicmodel():
     tm  = topic_model.Topicmodel()
     tm.EXTRACTED_DATA_ROOT_DIRECTORY = 'data/extracted_data/'
+    tm.NUM_TOPICS = 50
     print("Topicmodel program started ...")
     tm.get_lemmatized_data()
     tm.create_LDA_model()

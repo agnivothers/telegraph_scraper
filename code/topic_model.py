@@ -9,6 +9,9 @@ from grizzled.os import working_directory
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 import spacy
+import gensim
+from gensim import models, corpora
+from gensim.test.utils import datapath
 stop_words = stopwords.words('english') + list(punctuation)
 nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
 
@@ -16,6 +19,7 @@ logging.basicConfig(filename='topic_model.log', level=logging.DEBUG, format=' %(
 
 class Topicmodel:
     EXTRACTED_DATA_ROOT_DIRECTORY = ''
+    NUM_TOPICS = 0
     def get_lemmatized_data(self):
         tokenized_data = []
         lemmatized_data = []
@@ -32,11 +36,11 @@ class Topicmodel:
                     pagewise_directories = sorted(os.listdir(datewise_directory))
                     for pagewise_directory in pagewise_directories:
                         pagewise_directory = datewise_directory + '/' + pagewise_directory
-                        #logging.debug('PAGE: '+pagewise_directory)
+                        logging.debug('PAGE: '+pagewise_directory)
                         with working_directory(pagewise_directory):
                             newsfiles = sorted(os.listdir(pagewise_directory))
                             for newsfile in newsfiles:
-                                #logging.debug('HEADING: '+newsfile)
+                                logging.debug('HEADING: '+newsfile)
                                 with open(newsfile, "r") as content_file:
                                     file_content = content_file.read()
                                     text = re.sub(r'\W+', ' ', file_content)
@@ -48,20 +52,52 @@ class Topicmodel:
                                         if re.match(r'^[0-9]', word):# logging.debug("Words staring with number not added: "+word)
                                             continue
                                         words.append(word)
-                                    for word in words:
-                                        tokenized_data.append(word)
+                                    #for word in words:
+                                    tokenized_data.append(words)
 
-        logging.debug(tokenized_data)
-        logging.debug(len(tokenized_data))
+        #logging.debug(tokenized_data)
+        #logging.debug(len(tokenized_data))
         #lemmatized_data = self.lemmatize(tokenized_data, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
         #logging.debug(lemmatized_data)
         #logging.debug(len(lemmatized_data))
         with open('tokenized_data.pkl', 'wb') as f:
             pickle.dump(tokenized_data, f)
-        return ''
+        return 'tokenized_data.pkl'
 
     def create_LDA_model(self):
         print("Started creating LDA model ...")
+        tokenized_data = []
+        with open('tokenized_data.pkl', 'rb') as f:
+            tokenized_data = pickle.load(f)
+        #print(tokenized_data)
+        #self.get_old_lemmatized_data()
+        try:
+            id2word = corpora.Dictionary(tokenized_data)
+        except TypeError as te:
+            logging.exception(te)
+        logging.debug('id2word done')
+
+
+
+        corpus = [id2word.doc2bow(text) for text in tokenized_data]
+        logging.debug('corpus done')
+        lda_model = models.LdaModel(corpus=corpus,
+                                    id2word=id2word,
+                                    num_topics=self.NUM_TOPICS)
+
+        logging.debug('LdaModel creation done')
+
+        print("LDA Model:")
+
+        for idx in range(self.NUM_TOPICS):
+            # Print the first 50 most representative topics
+            print("Topic #%s:" % idx, lda_model.print_topic(idx, 10))
+
+        print("=" * 20)
+
+        # datapath = /home/agniv/.local/lib/python3.6/site-packages/gensim/test/test_data
+        temp_file = datapath("saved-model")
+        lda_model.save(temp_file)
 
     def tokenize(self, text, stop_words):
         words = word_tokenize(text)
@@ -82,3 +118,7 @@ class Topicmodel:
         i += 1
         logging.debug(str(i))
         return texts_out
+    def get_old_lemmatized_data(self):
+        with open('lemmatized_data.pkl', 'rb') as f:
+            lemmatized_data = pickle.load(f)
+        logging.debug(lemmatized_data)
