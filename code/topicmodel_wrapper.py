@@ -1,6 +1,6 @@
-from code import topicmodel
-def topicmodel(self):
-    tm  = topicmodel.Topicmodel()
+from code import topic_model
+def topicmodel():
+    tm  = topic_model.Topicmodel()
     print("Topicmodel program started ...")
     tm.get_lemmatized_data()
     tm.create_LDA_model()
