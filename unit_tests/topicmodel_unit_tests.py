@@ -1,8 +1,9 @@
 import unittest
-from code import topicmodel
+from code import topic_model
 
 class TopicmodelTest(unittest.TestCase):
-    tm = topicmodel.Topicmodel()
+    tm = topic_model.Topicmodel()
+    tm.EXTRACTED_DATA_ROOT_DIRECTORY = 'test_data/extracted_data/'
     def setUp(self):
         pass
 
