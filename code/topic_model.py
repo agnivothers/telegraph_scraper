@@ -37,11 +37,11 @@ class Topicmodel:
                     pagewise_directories = sorted(os.listdir(datewise_directory))
                     for pagewise_directory in pagewise_directories:
                         pagewise_directory = datewise_directory + '/' + pagewise_directory
-                        logging.debug('PAGE: '+pagewise_directory)
+                        #logging.debug('PAGE: '+pagewise_directory)
                         with working_directory(pagewise_directory):
                             newsfiles = sorted(os.listdir(pagewise_directory))
                             for newsfile in newsfiles:
-                                logging.debug('HEADING: '+newsfile)
+                                #logging.debug('HEADING: '+newsfile)
                                 with open(newsfile, "r") as content_file:
                                     file_content = content_file.read()
                                     text = re.sub(r'\W+', ' ', file_content)
@@ -99,8 +99,10 @@ class Topicmodel:
         # datapath = /home/agniv/.local/lib/python3.6/site-packages/gensim/test/test_data
         temp_file = datapath("saved-model")
         lda_model.save(temp_file)
+        return id2word
 
-    def get_tokenized_test_data(self):
+    def get_tokenized_test_data(self,id2word):
+        logging.debug('STARTED GET_TOKENIZED_TEST_DATA')
         temp_file = datapath("saved-model")
         saved_lda_model = models.LdaModel.load(temp_file)
         tokenized_data = []
@@ -118,11 +120,11 @@ class Topicmodel:
                     pagewise_directories = sorted(os.listdir(datewise_directory))
                     for pagewise_directory in pagewise_directories:
                         pagewise_directory = datewise_directory + '/' + pagewise_directory
-                        logging.debug('PAGE: '+pagewise_directory)
+                        #logging.debug('PAGE: '+pagewise_directory)
                         with working_directory(pagewise_directory):
                             newsfiles = sorted(os.listdir(pagewise_directory))
                             for newsfile in newsfiles:
-                                logging.debug('HEADING: '+newsfile)
+                                #logging.debug('HEADING: '+newsfile)
                                 with open(newsfile, "r") as content_file:
                                     file_content = content_file.read()
                                     text = re.sub(r'\W+', ' ', file_content)
@@ -134,6 +136,22 @@ class Topicmodel:
                                         if re.match(r'^[0-9]', word):# logging.debug("Words staring with number not added: "+word)
                                             continue
                                         words.append(word)
+                                        #logging.debug(words)
+                                        #print(words)
+                                    bow = id2word.doc2bow(words)
+                                    sorted_topic_list = sorted(saved_lda_model[bow], key=lambda x: x[1],
+                                                                   reverse=True)
+                                    top_topic = sorted_topic_list[:1]
+                                    (idx, value) = top_topic[0]
+                                    top_topic_str = str(saved_lda_model.print_topic(idx, 5))
+                                    top_topic_keywords = re.findall(r'"([^"]*)"', top_topic_str)
+                                    top_topic_probabilities = re.findall("\d+\.\d+", top_topic_str)
+                                    logging.debug('FILENAME: '+pagewise_directory+'/'+newsfile)
+                                    print('FILENAME: ' + pagewise_directory + '/' + newsfile)
+                                    logging.debug('TOPICS: ' + str(top_topic_keywords))
+                                    print('TOPICS: ' + str(top_topic_keywords))
+                                    logging.debug('TOPIC PROBABILITIES: ' + str(top_topic_probabilities))
+                                    print('TOPIC PROBABILITIES: ' + str(top_topic_probabilities))
                                     #for word in words:
                                     #tokenized_data.append(words)
 

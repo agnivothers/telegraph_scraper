@@ -6,7 +6,8 @@ def topicmodel():
     tm.NUM_TOPICS = 50
     print("Topicmodel program started ...")
     tm.get_tokenized_training_data()
-    tm.create_LDA_model()
+    id2word = tm.create_LDA_model()
+    tm.get_tokenized_test_data(id2word)
 
 def main():
     topicmodel()

@@ -20,7 +20,8 @@ class TopicmodelTest(unittest.TestCase):
         self.assertEqual(LDAModel1,LDAModel2)
     def test_get_tokenized_test_data(self):
         tokenized_test_data1 = self.get_tokenized_test_data_for_sep_2019_to_nov_2019()
-        tokenized_test_data2 = self.tm.get_tokenized_test_data()
+        id2word = self.tm.create_LDA_model()
+        tokenized_test_data2 = self.tm.get_tokenized_test_data(id2word)
         self.assertEqual(tokenized_test_data1,tokenized_test_data2)
 
     def get_tokenized_training_data_for_june_2018_to_aug_2019(self):
