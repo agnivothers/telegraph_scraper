@@ -103,10 +103,10 @@ def wrapper():
 
     ap = telegraph_scraper.ArchiveParameters()
 
-    start_date = date(2018,6,1)
+    start_date = date(2019,11,12)
     print("START DATE: "+str(start_date))
     download_date = start_date
-    end_date = date(2019,11,11)
+    end_date = date(2019,11,14)
     print("END DATE: " + str(end_date))
 
 
