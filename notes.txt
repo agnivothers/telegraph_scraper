@@ -25,3 +25,7 @@ export PYTHONPATH=`pwd`
 
 github url to clone repo:
 https://github.com/agnivothers/telegraph_scraper.git
+
+There are two dates for which there are no text available for the papers. Those are 2020-04-08 and 2020-06-19.
+For these two dates, blank folders are created to make the program run without stopping.
+
