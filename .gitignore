@@ -8,3 +8,12 @@ test_data
 telegraph_scraper.log
 topic_model.log
 data-OLD/
+data-OLD-old/
+data-old/
+data.zip
+lemmatized_data.pkl
+nohup.out
+nohup.out.old
+tokenized_data.pkl
+topic_model.log.old
+topic_model.log.test

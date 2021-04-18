@@ -103,20 +103,20 @@ def wrapper():
 
     ap = telegraph_scraper.ArchiveParameters()
 
-    start_date = date(2020,4,8)
+    start_date = date(2020,4,20)
     print("START DATE: "+str(start_date))
     download_date = start_date
-    end_date = date(2020,4,8)
+    end_date = date(2020,4,30)
     print("END DATE: " + str(end_date))
 
 
     # Loop to download data from the Internet
     print("Running download_data ...")
-    download_data(ts, ap, fsp, download_date, end_date)
+    #download_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates downloaded.")
     # Loop to parse the data locally
     print("Running extract_data ...")
-    #extract_data(ts, ap, fsp, download_date, end_date)
+    extract_data(ts, ap, fsp, download_date, end_date)
     print("Data for all dates extracted.")
     print("Wrapper program completed.")
 

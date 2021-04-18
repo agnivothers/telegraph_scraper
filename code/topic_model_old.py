@@ -12,7 +12,6 @@ import spacy
 import gensim
 from gensim import models, corpora
 from gensim.test.utils import datapath
-import matplotlib.pyplot as plt
 stop_words = stopwords.words('english') + list(punctuation)
 nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
 
@@ -66,12 +65,11 @@ class Topicmodel:
             pickle.dump(tokenized_data, f)
         return 'FROM TRAINING DATA'
 
-    def get_tokenized_data(self):
+    def create_LDA_model(self):
+        print("Started creating LDA model ...")
         tokenized_data = []
         with open('tokenized_data.pkl', 'rb') as f:
-            tokenized_data = pickle.load(f)        
-        return tokenized_data
-    def get_id2word(self, tokenized_data):        
+            tokenized_data = pickle.load(f)
         #print(tokenized_data)
         #self.get_old_lemmatized_data()
         try:
@@ -79,10 +77,9 @@ class Topicmodel:
         except TypeError as te:
             logging.exception(te)
         logging.debug('id2word done')
-        return id2word        
-    def create_LDA_model(self, id2word, tokenized_data):
-        print("Started creating LDA model ...")
-        #id2word = get_id2word()
+
+
+
         corpus = [id2word.doc2bow(text) for text in tokenized_data]
         logging.debug('corpus done')
         lda_model = models.LdaModel(corpus=corpus,
@@ -102,15 +99,13 @@ class Topicmodel:
         # datapath = /home/agniv/.local/lib/python3.6/site-packages/gensim/test/test_data
         temp_file = datapath("saved-model")
         lda_model.save(temp_file)
-        return 'LDA Model creation done'
+        return id2word
 
-    def get_topic_news_article_dict(self,id2word):
-        no_of_articles = 0
-        topic_news_article_dict = {}
+    def get_tokenized_test_data(self,id2word):
         logging.debug('STARTED GET_TOKENIZED_TEST_DATA')
         temp_file = datapath("saved-model")
         saved_lda_model = models.LdaModel.load(temp_file)
-        #tokenized_data = []
+        tokenized_data = []
         #lemmatized_data = []
         print("Started tokenized data ...")
         logging.debug(self.TEST_DATA_ROOT_DIRECTORY)
@@ -131,7 +126,6 @@ class Topicmodel:
                             for newsfile in newsfiles:
                                 #logging.debug('HEADING: '+newsfile)
                                 with open(newsfile, "r") as content_file:
-                                    no_of_articles = no_of_articles + 1
                                     file_content = content_file.read()
                                     text = re.sub(r'\W+', ' ', file_content)
                                     all_words = self.tokenize(text, stop_words)
@@ -146,23 +140,18 @@ class Topicmodel:
                                         #print(words)
                                     bow = id2word.doc2bow(words)
                                     sorted_topic_list = sorted(saved_lda_model[bow], key=lambda x: x[1],
-                                                                   reverse=True)                                    
+                                                                   reverse=True)
                                     top_topic = sorted_topic_list[:1]
                                     (idx, value) = top_topic[0]
-                                    if idx not in topic_news_article_dict:
-                                        topic_news_article_dict[idx] = 1
-                                    else:
-                                        count = topic_news_article_dict[idx] + 1                                        
-                                        topic_news_article_dict[idx] = count
                                     top_topic_str = str(saved_lda_model.print_topic(idx, 5))
                                     top_topic_keywords = re.findall(r'"([^"]*)"', top_topic_str)
                                     top_topic_probabilities = re.findall("\d+\.\d+", top_topic_str)
                                     logging.debug('FILENAME: '+pagewise_directory+'/'+newsfile)
-                                    #print('FILENAME: ' + pagewise_directory + '/' + newsfile)
+                                    print('FILENAME: ' + pagewise_directory + '/' + newsfile)
                                     logging.debug('TOPICS: ' + str(top_topic_keywords))
-                                    #print('TOPICS: ' + str(top_topic_keywords))
+                                    print('TOPICS: ' + str(top_topic_keywords))
                                     logging.debug('TOPIC PROBABILITIES: ' + str(top_topic_probabilities))
-                                    #print('TOPIC PROBABILITIES: ' + str(top_topic_probabilities))
+                                    print('TOPIC PROBABILITIES: ' + str(top_topic_probabilities))
                                     #for word in words:
                                     #tokenized_data.append(words)
 
@@ -173,25 +162,8 @@ class Topicmodel:
         #logging.debug(len(lemmatized_data))
         #with open('tokenized_data.pkl', 'wb') as f:
          #   pickle.dump(tokenized_data, f)
-        print()
-        print('Number of articles:' + str(no_of_articles))
-        print('\n\n')
-        
-        print('========== No. of news articles per topic ===========')
-        print(topic_news_article_dict)
-        print('\n\n')
-        print('========== Normalized No. of news articles per topic ===========')
-        for key in topic_news_article_dict.keys():
-            count = topic_news_article_dict[key]
-            percentage = count*100/no_of_articles
-            topic_news_article_dict[key] = percentage
-        print(topic_news_article_dict)              
-        return topic_news_article_dict
+        return 'FROM TEST DATA'
 
-    def plot_histogram(self,topic_news_article_dict):
-        plt.bar(list(topic_news_article_dict.keys()), topic_news_article_dict.values(), color='g')
-        plt.xticks(list(topic_news_article_dict.keys()))
-        plt.show()
     def tokenize(self, text, stop_words):
         words = word_tokenize(text)
         words = [w.lower() for w in words]
